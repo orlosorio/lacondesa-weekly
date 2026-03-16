@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
 
-const BEEHIIV_API_KEY = process.env.BEEHIIV_API_KEY;
-const BEEHIIV_PUBLICATION_ID = process.env.BEEHIIV_PUBLICATION_ID;
+// Get API key from Beehiiv: app.beehiiv.com → Settings → API → Create New API Key.
+// Copy the key immediately (it’s only shown once) and set BEEHIIV_API_KEY in Vercel.
+const BEEHIIV_API_KEY = process.env.BEEHIIV_API_KEY?.trim();
+const BEEHIIV_PUBLICATION_ID = process.env.BEEHIIV_PUBLICATION_ID?.trim();
 
 export async function POST(request: Request) {
   if (!BEEHIIV_API_KEY || !BEEHIIV_PUBLICATION_ID) {
@@ -49,10 +51,19 @@ export async function POST(request: Request) {
   const data = await res.json().catch(() => ({}));
 
   if (!res.ok) {
-    const message =
+    const rawMessage =
       typeof data?.message === "string"
         ? data.message
         : data?.errors?.[0]?.message ?? "Subscription failed.";
+    // Never show API key / auth errors to visitors
+    const isAuthError =
+      res.status === 401 ||
+      rawMessage.toLowerCase().includes("api key") ||
+      rawMessage.toLowerCase().includes("not valid") ||
+      rawMessage.toLowerCase().includes("unauthorized");
+    const message = isAuthError
+      ? "Subscription is temporarily unavailable. Please try again later."
+      : rawMessage;
     return NextResponse.json(
       { error: message },
       { status: res.status >= 500 ? 503 : 400 }
