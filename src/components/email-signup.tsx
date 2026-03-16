@@ -30,9 +30,24 @@ export function EmailSignup({
       return;
     }
     setStatus("loading");
-    await new Promise((r) => setTimeout(r, 1200));
-    console.log("Newsletter signup:", email);
-    setStatus("success");
+    setErrorMsg("");
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setStatus("error");
+        setErrorMsg(typeof data?.error === "string" ? data.error : "Something went wrong. Try again.");
+        return;
+      }
+      setStatus("success");
+    } catch {
+      setStatus("error");
+      setErrorMsg("Something went wrong. Try again.");
+    }
   };
 
   if (status === "success") {
