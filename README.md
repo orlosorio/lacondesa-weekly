@@ -1,36 +1,118 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# La Condesa Weekly
 
-## Getting Started
+A Next.js site for the La Condesa Weekly newsletter (lacondesa.mx), with content managed in Sanity CMS.
 
-First, run the development server:
+---
+
+## 1. Run the site locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open **http://localhost:3000**. The site uses your existing `.env.local` (project ID `akhh5wfz`). If Sanity isn’t set up yet, the site still works with built-in placeholder content.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 2. Sanity setup (one-time)
 
-## Learn More
+### Create a Sanity project (if you haven’t)
 
-To learn more about Next.js, take a look at the following resources:
+1. Go to **[sanity.io/manage](https://www.sanity.io/manage)** and sign in.
+2. Create a project (or use the one with ID `akhh5wfz`).
+3. Note the **Project ID** and **Dataset** (usually `production`).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Configure CORS so the Studio can load
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. In [sanity.io/manage](https://www.sanity.io/manage), open your project.
+2. Go to **API** → **CORS origins**.
+3. Click **Add CORS origin** and add:
+   - **Origin**: `http://localhost:3000`
+   - Leave **Allow credentials** checked.
+4. For production, add your real domain (e.g. `https://lacondesa.mx`) the same way.
 
-## Deploy on Vercel
+### Open the content studio
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+With the dev server running:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Open **http://localhost:3000/studio**
+
+You’ll see the Sanity Studio where you manage:
+
+- **Articles** – blog posts (title, slug, excerpt, category, date, featured image, body with rich text).
+- **Archive Issues** – newsletter issues (number, title, date, slug).
+- **Testimonials** – reader quotes for the homepage.
+- **Site Settings** – single doc for subscriber count, open rate, social links, hero image.
+
+---
+
+## 3. Add content
+
+### First time: create Site Settings
+
+1. In the Studio sidebar, click **Site Settings**.
+2. Create the document (it’s a singleton). Add subscriber count, open rate, Instagram/TikTok URLs, and optional hero image.
+3. Publish.
+
+### Add an article
+
+1. Go to **Articles** → **Create new**.
+2. Fill in **Title**, then click **Generate** on the **Slug** field.
+3. Add **Excerpt**, **Category**, **Publish Date**, **Read time**, and **Featured image** (upload or select).
+4. In **Body**, use the editor for paragraphs, headings (H2, H3), blockquotes, and links.
+5. Click **Publish**.
+
+### Add testimonials and archive issues
+
+- **Testimonials**: Name, initials (e.g. MG), quote, detail (e.g. “Condesa resident, 3 years”). Use **Display order** to order them.
+- **Archive issues**: Issue number, title, date, and slug (e.g. `issue-47`). Publish.
+
+Once you have content in Sanity, the homepage, blog, and archive will use it automatically (with fallback to placeholder data if the API fails).
+
+---
+
+## 4. Environment variables
+
+Your `.env.local` should have:
+
+```env
+NEXT_PUBLIC_SANITY_PROJECT_ID="akhh5wfz"
+NEXT_PUBLIC_SANITY_DATASET="production"
+```
+
+For draft content or private APIs you can add:
+
+```env
+SANITY_API_READ_TOKEN="your-token"
+```
+
+Create the token under **API** → **Tokens** in the Sanity dashboard.
+
+---
+
+## 5. Build and deploy
+
+```bash
+npm run build
+```
+
+For Vercel:
+
+1. Import the repo and deploy.
+2. In the project settings, add the same env vars (`NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET`).
+3. In Sanity **API** → **CORS origins**, add your production URL (e.g. `https://lacondesa.mx` or your Vercel URL).
+
+---
+
+## 6. Quick reference
+
+| What              | Where / How                                      |
+|-------------------|--------------------------------------------------|
+| Run site          | `npm run dev` → http://localhost:3000            |
+| Edit content      | http://localhost:3000/studio                     |
+| Sanity dashboard  | [sanity.io/manage](https://www.sanity.io/manage) |
+| CORS settings     | Sanity project → API → CORS origins              |
+| Env vars          | `.env.local` (don’t commit secrets)              |
+
+If something doesn’t load (e.g. Studio or images), check CORS and that `NEXT_PUBLIC_SANITY_PROJECT_ID` matches your Sanity project.
