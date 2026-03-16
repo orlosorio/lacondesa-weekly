@@ -25,31 +25,38 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* Hero with background image */}
-      <section className="relative min-h-screen flex items-center pt-20 lg:pt-0">
+      {/* Hero with La Condesa illustration */}
+      <section className="relative min-h-screen flex items-center pt-20 lg:pt-0 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?w=1600&q=80"
-            alt="Tree-lined street in La Condesa, Mexico City"
+            src="/images/hero-condesa.png"
+            alt="La Condesa neighborhood: tree-lined streets, jacarandas, cafes and parks in Mexico City"
             fill
-            className="object-cover"
+            className="object-cover object-center"
             priority
+            sizes="100vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/60" />
+          <div
+            className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/50"
+            aria-hidden
+          />
         </div>
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-          <div className="max-w-2xl">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 w-full">
+          <div className="max-w-xl">
+            <p className="text-sm font-medium tracking-wide text-primary uppercase mb-4">
+              Mexico City
+            </p>
             <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-semibold text-foreground leading-tight text-balance">
               Your weekly guide to the best of La Condesa
             </h1>
-            <p className="mt-6 text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-xl">
+            <p className="mt-6 text-lg lg:text-xl text-muted-foreground leading-relaxed">
               New openings, weekend picks, hidden gems, and everything worth
-              doing in the neighborhood - delivered to your inbox every Thursday.
+              doing in the neighborhood — delivered to your inbox every Thursday.
             </p>
             <div className="mt-8 max-w-md">
               <EmailSignup
                 variant="hero"
-                ctaText="Subscribe - It's Free"
+                ctaText="Subscribe — It's Free"
                 showSocialProof
                 socialProofText="Join 2,000+ Condesa insiders"
               />
