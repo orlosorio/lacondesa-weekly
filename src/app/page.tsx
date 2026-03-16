@@ -19,8 +19,11 @@ export default async function HomePage() {
   const { testimonials } = await getTestimonials();
 
   const latestArticle = usingSanity ? sanityArticles![0] : articles[0];
+  const latestArticleImage = latestArticle && (latestArticle as { image?: unknown }).image;
   const latestImageSrc = usingSanity && latestArticle
-    ? urlFor((latestArticle as { image: unknown }).image).width(800).quality(80).url()
+    ? latestArticleImage
+      ? urlFor(latestArticleImage).width(800).quality(80).url()
+      : "https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?w=800&q=80"
     : (latestArticle as { image: string }).image;
 
   return (

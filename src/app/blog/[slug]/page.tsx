@@ -93,8 +93,12 @@ export default async function BlogArticlePage({ params }: PageProps) {
     notFound();
   }
 
+  const fallbackImage =
+    "https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?w=1200&q=80";
   const imageSrc = usingSanity
-    ? urlFor(sanityArticle!.image).width(1200).quality(80).url()
+    ? sanityArticle!.image
+      ? urlFor(sanityArticle!.image).width(1200).quality(80).url()
+      : fallbackImage
     : (article!.image as string);
 
   const relatedStatic = fallbackArticles.filter((a) => a.slug !== slug).slice(0, 3);
