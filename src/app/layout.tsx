@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans, Playfair_Display } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import { Navigation } from "@/components/nav";
 import { Footer } from "@/components/footer";
@@ -72,6 +73,7 @@ export default function RootLayout({
         <Footer />
         <CookieBanner />
         <ExitIntentPopup />
+        <Analytics />
       </body>
     </html>
   );
