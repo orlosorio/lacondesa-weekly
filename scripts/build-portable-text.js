@@ -14,7 +14,10 @@ function buildPortableTextBody(content) {
 
     let style = "normal";
     let text = trimmed;
-    if (trimmed.startsWith("## ")) {
+    if (trimmed.startsWith("### ")) {
+      style = "h3";
+      text = trimmed.slice(4);
+    } else if (trimmed.startsWith("## ")) {
       style = "h2";
       text = trimmed.slice(3);
     }

@@ -1,6 +1,7 @@
+import Image from "next/image";
 import Link from "next/link";
 import { EmailSignup } from "@/components/email-signup";
-import { Utensils, Calendar, Gem } from "lucide-react";
+import { Utensils, Calendar, Gem, ArrowLeft } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -36,7 +37,7 @@ export default function SubscribePage() {
           what&apos;s happening in the neighborhood.
         </p>
 
-        <div className="max-w-md mx-auto mb-10">
+        <div className="max-w-[550px] mx-auto mb-10">
           <EmailSignup
             variant="hero"
             ctaText="Subscribe - It's Free"
@@ -62,6 +63,28 @@ export default function SubscribePage() {
         <p className="mt-10 text-xs text-muted-foreground">
           Free forever. Unsubscribe anytime. No spam, ever.
         </p>
+
+        <div className="mt-12 mb-12 flex justify-center">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 rounded-md border border-border bg-background px-6 py-3 text-sm font-medium text-foreground shadow-sm transition-colors hover:bg-secondary hover:border-primary/30"
+          >
+            <ArrowLeft className="h-4 w-4" aria-hidden />
+            Back to homepage
+          </Link>
+        </div>
+
+        <div className="mt-16 w-full max-w-[1344px] mx-auto">
+          <div className="relative w-full aspect-[2/1] overflow-hidden mask-cloud-fade">
+            <Image
+              src="/images/footer-condesa.png"
+              alt="Street scene in La Condesa, Mexico City — cafes, jacarandas, and Parque España"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 1344px"
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

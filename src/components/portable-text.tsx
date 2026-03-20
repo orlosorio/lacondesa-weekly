@@ -8,7 +8,7 @@ import Image from "next/image";
 import { urlFor } from "@/sanity/image";
 import { EmailSignup } from "@/components/email-signup";
 
-const components: PortableTextComponents = {
+export const portableTextComponents: PortableTextComponents = {
   block: {
     h2: ({ children }) => (
       <h2 className="font-serif text-2xl font-semibold text-foreground mt-10 mb-4">
@@ -112,7 +112,7 @@ export function ArticleBody({
           <PortableText
             key={`pt-${partIndex}`}
             value={currentBlocks as Parameters<typeof PortableText>[0]["value"]}
-            components={components}
+            components={portableTextComponents}
           />
         );
         currentBlocks = [];
@@ -133,7 +133,7 @@ export function ArticleBody({
       <PortableText
         key={`pt-${partIndex}`}
         value={currentBlocks as Parameters<typeof PortableText>[0]["value"]}
-        components={components}
+        components={portableTextComponents}
       />
     );
   }

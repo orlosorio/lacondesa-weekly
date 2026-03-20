@@ -4,6 +4,7 @@ export const archiveIssue = defineType({
   name: "archiveIssue",
   title: "Archive Issue",
   type: "document",
+  liveEdit: true,
   fields: [
     defineField({
       name: "number",

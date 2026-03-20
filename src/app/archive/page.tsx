@@ -67,7 +67,7 @@ export default async function ArchivePage() {
           <p className="text-muted-foreground mb-8">
             Get the best of La Condesa delivered to your inbox every Thursday.
           </p>
-          <div className="max-w-md mx-auto">
+          <div className="max-w-[550px] mx-auto">
             <EmailSignup variant="hero" ctaText="Subscribe - It's Free" />
           </div>
         </div>

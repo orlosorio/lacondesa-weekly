@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Instagram } from "lucide-react";
 
 function TikTokIcon() {
@@ -12,16 +13,23 @@ function TikTokIcon() {
 const quickLinks = [
   { href: "/about", label: "About" },
   { href: "/blog", label: "Blog" },
+  { href: "/listas", label: "Listas" },
+  { href: "/equipo", label: "Equipo" },
   { href: "/advertise", label: "Advertise" },
   { href: "/archive", label: "Archive" },
+  { href: "/contacto", label: "Contacto" },
   { href: "/privacy", label: "Privacy" },
+];
+
+const businessLinks = [
+  { href: "/nueva-apertura", label: "Comparte tu apertura" },
 ];
 
 export function Footer() {
   return (
     <footer className="bg-secondary border-t border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           <div className="md:col-span-1">
             <Link href="/" className="inline-block">
               <span className="font-serif text-xl font-semibold text-foreground">
@@ -41,6 +49,24 @@ export function Footer() {
             </h3>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="md:col-span-1">
+            <h3 className="text-sm font-semibold text-foreground mb-4">
+              Para negocios
+            </h3>
+            <ul className="space-y-3">
+              {businessLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
@@ -81,6 +107,15 @@ export function Footer() {
         </div>
 
         <div className="mt-12 pt-8 border-t border-border">
+          <div className="relative w-full max-w-4xl mx-auto aspect-[2/1] rounded-lg overflow-hidden mb-8">
+            <Image
+              src="/images/footer-condesa.png"
+              alt="Street scene in La Condesa, Mexico City — cafes, jacarandas, and Parque España"
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 896px"
+            />
+          </div>
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
             <p className="text-sm text-muted-foreground">
               Made with love in La Condesa

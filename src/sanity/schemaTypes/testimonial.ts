@@ -4,6 +4,7 @@ export const testimonial = defineType({
   name: "testimonial",
   title: "Testimonial",
   type: "document",
+  liveEdit: true,
   fields: [
     defineField({
       name: "name",

@@ -3,9 +3,11 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { EmailSignup } from "@/components/email-signup";
 import { contentPillars } from "@/lib/data";
-import { getArticles, getTestimonials } from "@/sanity/fetch";
+import { getArticles, getTestimonials, getNewOpenings } from "@/sanity/fetch";
 import { urlFor } from "@/sanity/image";
+import { getBlogPostImageUrl } from "@/lib/blog-images";
 import { ArrowRight, Utensils, Calendar, Gem, MapPin } from "lucide-react";
+import { NewOpeningsCarousel } from "@/components/new-openings-carousel";
 
 const iconMap: Record<string, React.ReactNode> = {
   utensils: <Utensils className="h-6 w-6 text-primary" />,
@@ -17,14 +19,30 @@ const iconMap: Record<string, React.ReactNode> = {
 export default async function HomePage() {
   const { articles, sanityArticles, usingSanity } = await getArticles();
   const { testimonials } = await getTestimonials();
+  const { openings: newOpenings } = await getNewOpenings();
 
   const latestArticle = usingSanity ? sanityArticles![0] : articles[0];
-  const latestArticleImage = latestArticle && (latestArticle as { image?: unknown }).image;
-  const latestImageSrc = usingSanity && latestArticle
-    ? latestArticleImage
-      ? urlFor(latestArticleImage).width(800).quality(80).url()
-      : "https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?w=800&q=80"
-    : (latestArticle as { image: string }).image;
+  const latestHasImage = !!(latestArticle as { image?: unknown })?.image;
+  const latestFromSanity = Boolean(usingSanity && latestHasImage);
+  const latestImageSrc = latestArticle
+    ? latestFromSanity
+      ? urlFor((latestArticle as { image: unknown }).image).width(800).quality(80).url()
+      : getBlogPostImageUrl(latestArticle.slug, 800)
+    : "";
+  // #region agent log
+  fetch("http://127.0.0.1:7483/ingest/e5dcf654-c539-40d8-a49f-f3353a40d0e2", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "cf215d" },
+    body: JSON.stringify({
+      sessionId: "cf215d",
+      location: "page.tsx:home",
+      message: "Home latest issue image source",
+      data: { usingSanity, latestHasImage, latestFromSanity, imagePrefix: (latestImageSrc || "").slice(0, 60), fromSanityCdn: (latestImageSrc || "").includes("cdn.sanity.io") },
+      timestamp: Date.now(),
+      hypothesisId: "H3",
+    }),
+  }).catch(() => {});
+  // #endregion
 
   return (
     <>
@@ -56,7 +74,7 @@ export default async function HomePage() {
               New openings, weekend picks, hidden gems, and everything worth
               doing in the neighborhood — delivered to your inbox every Thursday.
             </p>
-            <div className="mt-8 max-w-md">
+            <div className="mt-8 max-w-[550px]">
               <EmailSignup
                 variant="hero"
                 ctaText="Subscribe — It's Free"
@@ -64,9 +82,19 @@ export default async function HomePage() {
                 socialProofText="Join 2,000+ Condesa insiders"
               />
             </div>
+            <p className="mt-6 text-sm text-muted-foreground">
+              ¿Abriste algo nuevo?{" "}
+              <Link href="/nueva-apertura" className="text-primary hover:underline">
+                Cuéntanos
+              </Link>
+              .
+            </p>
           </div>
         </div>
       </section>
+
+      {/* New Openings carousel */}
+      {newOpenings.length > 0 && <NewOpeningsCarousel openings={newOpenings} />}
 
       {/* Latest Issue */}
       <section className="py-16 lg:py-24 bg-background">
@@ -86,12 +114,12 @@ export default async function HomePage() {
 
           <div className="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm overflow-hidden border-border hover:shadow-lg transition-shadow duration-300">
             <div className="grid md:grid-cols-2 gap-0">
-              <div className="relative aspect-[4/3] md:aspect-auto">
+              <div className="relative aspect-[4/3] md:aspect-auto overflow-hidden">
                 <Image
                   src={latestImageSrc}
                   alt="Latest newsletter issue preview"
                   fill
-                  className="object-cover"
+                  className="object-cover object-center"
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
               </div>
@@ -123,6 +151,73 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Blog grid — up to 6 posts */}
+      {(usingSanity ? (sanityArticles ?? []) : articles).length > 0 && (
+        <section className="py-16 lg:py-24 bg-secondary">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="font-serif text-2xl lg:text-3xl font-semibold text-foreground">
+                From the Blog
+              </h2>
+              <Link
+                href="/blog"
+                className="text-sm font-medium text-primary hover:text-primary/80 transition-colors flex items-center gap-1"
+              >
+                View all
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {(usingSanity ? sanityArticles ?? [] : articles)
+                .slice(0, 6)
+                .map((post, idx) => {
+                  const slug = post.slug as string;
+                  const sanityImage = (post as { image?: unknown }).image;
+                  const useSanity = Boolean(usingSanity && sanityImage);
+                  const imageSrc = useSanity
+                    ? urlFor(sanityImage).width(600).height(340).quality(80).url()
+                    : getBlogPostImageUrl(slug, 600);
+
+                  return (
+                    <Link
+                      key={post.slug}
+                      href={`/blog/${post.slug}`}
+                      className="group text-card-foreground flex flex-col rounded-xl border overflow-hidden border-border bg-card hover:shadow-lg hover:border-primary/20 transition-all duration-300"
+                    >
+                      <div className="relative aspect-[16/10] bg-muted overflow-hidden">
+                        <Image
+                          src={imageSrc}
+                          alt=""
+                          fill
+                          className="object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        />
+                      </div>
+                      <div className="p-4 lg:p-5 flex flex-col flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Badge variant="secondary" className="text-xs font-medium">
+                            {(post as { category?: string }).category || "Blog"}
+                          </Badge>
+                          <span className="text-xs text-muted-foreground">{post.date}</span>
+                        </div>
+                        <h3 className="font-semibold text-foreground line-clamp-2 group-hover:text-primary transition-colors">
+                          {post.title}
+                        </h3>
+                        <p className="mt-2 text-sm text-muted-foreground line-clamp-2 flex-1">
+                          {post.excerpt}
+                        </p>
+                        <span className="mt-3 text-sm font-medium text-primary group-hover:underline">
+                          Read more
+                        </span>
+                      </div>
+                    </Link>
+                  );
+                })}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* What You Get */}
       <section className="py-16 lg:py-24 bg-secondary">
@@ -213,7 +308,7 @@ export default async function HomePage() {
             Get the best of the neighborhood delivered to your inbox every
             Thursday. Free forever.
           </p>
-          <div className="max-w-md mx-auto">
+          <div className="max-w-[550px] mx-auto">
             <EmailSignup
               variant="hero"
               ctaText="Subscribe Now"

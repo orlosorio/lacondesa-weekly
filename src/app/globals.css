@@ -157,3 +157,21 @@
 .animate-fade-in-up {
   animation: fadeInUp 0.6s ease-out forwards;
 }
+
+/* Cloud-like irregular fade mask for images */
+.mask-cloud-fade {
+  -webkit-mask-image:
+    radial-gradient(ellipse 88% 75% at 45% 45%, black 28%, transparent 72%),
+    radial-gradient(ellipse 72% 88% at 58% 58%, black 22%, transparent 68%);
+  mask-image:
+    radial-gradient(ellipse 88% 75% at 45% 45%, black 28%, transparent 72%),
+    radial-gradient(ellipse 72% 88% at 58% 58%, black 22%, transparent 68%);
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}

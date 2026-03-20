@@ -14,6 +14,24 @@ export const allArticlesQuery = groq`
   }
 `;
 
+export const allNewOpeningsQuery = groq`
+  *[_type == "newOpening" && highlighted == true] | order(coalesce(openedAt, _createdAt) desc)[0...10] {
+    _id,
+    title,
+    "slug": slug.current,
+    neighborhood,
+    shortDescription,
+    category,
+    openedAt,
+    image,
+    externalUrl,
+    article->{
+      _type,
+      "slug": slug.current
+    }
+  }
+`;
+
 export const articleBySlugQuery = groq`
   *[_type == "article" && slug.current == $slug][0] {
     _id,
@@ -24,7 +42,14 @@ export const articleBySlugQuery = groq`
     date,
     readTime,
     image,
-    body
+    body,
+    author->{
+      _id,
+      name,
+      role,
+      "slug": slug.current,
+      photo
+    }
   }
 `;
 
@@ -54,6 +79,130 @@ export const allArchiveIssuesQuery = groq`
   }
 `;
 
+export const teamMembersQuery = groq`
+  *[_type == "teamMember" && active == true] | order(order asc, _createdAt asc) {
+    _id,
+    name,
+    role,
+    bio,
+    photo,
+    "slug": slug.current,
+    tagline,
+    expertise,
+    yearsActive,
+    twitterUrl,
+    instagramUrl,
+    linkedinUrl,
+    personalWebsite
+  }
+`;
+
+export const teamMemberBySlugQuery = groq`
+  *[_type == "teamMember" && slug.current == $slug][0] {
+    _id,
+    name,
+    role,
+    bio,
+    photo,
+    "slug": slug.current,
+    tagline,
+    fullBio,
+    expertise,
+    credentials,
+    authorStatement,
+    yearsActive,
+    twitterUrl,
+    instagramUrl,
+    linkedinUrl,
+    personalWebsite,
+    featuredWork[]->{
+      _id,
+      _type,
+      title,
+      "slug": slug.current,
+      category,
+      publishedAt,
+      date,
+      heroImage,
+      image
+    }
+  }
+`;
+
+export const authorContentByAuthorIdQuery = groq`
+  {
+    "listicles": *[_type == "listicle" && author._ref == $authorId] | order(publishedAt desc) {
+      _id,
+      _type,
+      title,
+      "slug": slug.current,
+      category,
+      publishedAt,
+      heroImage
+    },
+    "articles": *[_type == "article" && author._ref == $authorId] | order(date desc) {
+      _id,
+      _type,
+      title,
+      "slug": slug.current,
+      category,
+      "publishedAt": date,
+      image
+    }
+  }
+`;
+
+export const listicleBySlugQuery = groq`
+  *[_type == "listicle" && slug.current == $slug][0] {
+    _id,
+    title,
+    "slug": slug.current,
+    category,
+    publishedAt,
+    author->{
+      _id,
+      name,
+      role,
+      "slug": slug.current,
+      photo
+    },
+    heroImage,
+    summary,
+    seoDescription,
+    entries[] {
+      _key,
+      name,
+      tagline,
+      photo,
+      description,
+      pullQuote,
+      address,
+      hours,
+      priceRange,
+      externalUrl,
+      externalLinkLabel
+    }
+  }
+`;
+
+export const listicleSlugsQuery = groq`
+  *[_type == "listicle" && defined(slug.current)] {
+    "slug": slug.current
+  }
+`;
+
+export const listiclesQuery = groq`
+  *[_type == "listicle" && defined(publishedAt)] | order(publishedAt desc) {
+    _id,
+    title,
+    "slug": slug.current,
+    category,
+    publishedAt,
+    seoDescription,
+    heroImage
+  }
+`;
+
 export const siteSettingsQuery = groq`
   *[_type == "siteSettings"][0] {
     subscriberCount,
@@ -62,6 +211,14 @@ export const siteSettingsQuery = groq`
     clickRate,
     instagramUrl,
     tiktokUrl,
-    heroImage
+    heroImage,
+    siteTitle,
+    titleTemplate,
+    metaDescription,
+    ogTitle,
+    ogDescription,
+    ogImage,
+    favicon,
+    twitterCard
   }
 `;

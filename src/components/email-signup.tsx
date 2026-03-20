@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Loader2, Check, Share2 } from "lucide-react";
 
 interface EmailSignupProps {
-  variant?: "default" | "hero" | "inline" | "compact";
+  variant?: "default" | "hero" | "inline" | "compact" | "popup";
   ctaText?: string;
   showSocialProof?: boolean;
   socialProofText?: string;
@@ -86,12 +86,12 @@ export function EmailSignup({
     );
   }
 
-  if (variant === "hero" || variant === "default") {
+  if (variant === "popup") {
     return (
       <div className={`w-full ${className}`}>
         <form
           onSubmit={handleSubmit}
-          className="flex gap-3 flex-col sm:flex-row"
+          className="flex gap-4 flex-col sm:flex-row"
         >
           <input
             type="email"
@@ -101,7 +101,43 @@ export function EmailSignup({
               setEmail(e.target.value);
               if (status === "error") setStatus("idle");
             }}
-            className="w-full min-w-0 rounded-md border bg-white border-border h-12 text-base px-4 shadow-xs transition-[color,box-shadow] outline-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] md:text-sm"
+            className="w-[300px] max-w-full min-w-0 rounded-lg border bg-white border-border h-14 text-lg px-5 shadow-xs transition-[color,box-shadow] outline-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+          />
+          <button
+            type="submit"
+            disabled={status === "loading"}
+            className="inline-flex items-center justify-center gap-2 rounded-lg transition-all disabled:pointer-events-none disabled:opacity-50 bg-primary hover:bg-primary/90 text-primary-foreground font-medium whitespace-nowrap h-14 px-10 text-lg"
+          >
+            {status === "loading" ? (
+              <Loader2 className="h-5 w-5 animate-spin" />
+            ) : (
+              ctaText
+            )}
+          </button>
+        </form>
+        {status === "error" && (
+          <p className="mt-3 text-base text-red-600">{errorMsg}</p>
+        )}
+      </div>
+    );
+  }
+
+  if (variant === "hero" || variant === "default") {
+    return (
+      <div className={`w-full ${className}`}>
+        <form
+          onSubmit={handleSubmit}
+          className="flex w-[550px] max-w-full gap-3 flex-col sm:flex-row"
+        >
+          <input
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              if (status === "error") setStatus("idle");
+            }}
+            className="w-[300px] max-w-full min-w-0 rounded-md border bg-white border-border h-12 text-base px-4 shadow-xs transition-[color,box-shadow] outline-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] md:text-sm"
           />
           <button
             type="submit"

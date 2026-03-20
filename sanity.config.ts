@@ -16,8 +16,11 @@ export default defineConfig({
           .title("Content")
           .items([
             S.documentTypeListItem("article").title("Articles"),
+            S.documentTypeListItem("newOpening").title("New Openings"),
             S.documentTypeListItem("archiveIssue").title("Archive Issues"),
             S.documentTypeListItem("testimonial").title("Testimonials"),
+            S.documentTypeListItem("teamMember").title("Team"),
+            S.documentTypeListItem("listicle").title("Listicles"),
             S.divider(),
             S.listItem()
               .title("Site Settings")

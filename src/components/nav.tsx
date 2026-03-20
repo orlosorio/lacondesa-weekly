@@ -6,10 +6,14 @@ import { Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 
 const navLinks = [
-  { href: "/blog", label: "Blog" },
+  { href: "/blog", label: "Stories" },
+  { href: "/lists", label: "Lists" },
   { href: "/about", label: "About" },
+  { href: "/team", label: "Team" },
+  { href: "/submit", label: "Submit opening" },
   { href: "/advertise", label: "Advertise" },
   { href: "/archive", label: "Archive" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export function Navigation() {

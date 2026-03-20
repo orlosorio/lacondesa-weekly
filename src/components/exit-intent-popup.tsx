@@ -45,20 +45,20 @@ export function ExitIntentPopup() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="max-w-md rounded-xl border-border bg-cream p-8 sm:p-10">
+      <DialogContent className="w-[min(700px,calc(100vw-2rem))] max-w-[min(700px,calc(100vw-2rem))] sm:max-w-[min(700px,calc(100vw-2rem))] rounded-2xl border border-border bg-background p-8 shadow-xl sm:p-12 md:p-16">
         <DialogTitle className="sr-only">Subscribe to La Condesa Weekly</DialogTitle>
         <div className="text-center">
-          <p className="font-heading text-3xl text-foreground">
+          <p className="font-heading text-[40px] text-foreground text-balance">
             Before you go...
           </p>
-          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+          <p className="mt-6 text-lg sm:text-xl leading-relaxed text-muted-foreground max-w-2xl mx-auto sm:max-w-3xl md:max-w-none">
             Get the best of La Condesa delivered to your inbox every Thursday.
             Free, curated, and written by people who actually live here.
           </p>
         </div>
-        <div className="mt-6">
-          <EmailSignup variant="hero" />
-          <p className="mt-4 text-center text-xs text-muted-foreground">
+        <div className="mt-10">
+          <EmailSignup variant="popup" />
+          <p className="mt-6 text-center text-base text-muted-foreground">
             Join 2,000+ Condesa insiders. Unsubscribe anytime.
           </p>
         </div>

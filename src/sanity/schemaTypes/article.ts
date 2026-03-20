@@ -4,6 +4,8 @@ export const article = defineType({
   name: "article",
   title: "Article",
   type: "document",
+  // Allow creating and editing articles directly in the Published perspective (avoids "Choose a destination" banner)
+  liveEdit: true,
   fields: [
     defineField({
       name: "title",
@@ -66,6 +68,13 @@ export const article = defineType({
           type: "string",
         }),
       ],
+    }),
+    defineField({
+      name: "author",
+      title: "Author",
+      type: "reference",
+      to: [{ type: "teamMember" }],
+      description: "Who wrote this article.",
     }),
     defineField({
       name: "body",
