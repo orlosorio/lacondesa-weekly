@@ -89,15 +89,15 @@ export default async function TeamPage() {
                     href={member.slug ? `/team/${member.slug}` : "#"}
                     className="group flex flex-col h-full"
                   >
-                    <div className="relative aspect-square w-full overflow-hidden bg-muted rounded-xl">
+                    <div className="relative h-40 w-40 sm:h-44 sm:w-44 self-start overflow-hidden bg-muted rounded-full shrink-0">
                       {photoUrl ? (
                         <Image
                           src={photoUrl}
                           alt={alt}
                           width={600}
                           height={600}
-                          className="object-cover object-center grayscale group-hover:grayscale-0 transition-[filter] duration-500"
-                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          className="h-full w-full object-cover object-center rounded-full grayscale group-hover:grayscale-0 transition-[filter] duration-500"
+                          sizes="176px"
                         />
                       ) : (
                         <div
