@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Instagram } from "lucide-react";
+import { SPOT_NEIGHBORHOODS } from "@/lib/spots-config";
 
 function TikTokIcon() {
   return (
@@ -29,7 +30,7 @@ export function Footer() {
   return (
     <footer className="bg-secondary border-t border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12">
           <div className="md:col-span-1">
             <Link href="/" className="inline-block">
               <span className="font-serif text-xl font-semibold text-foreground">
@@ -41,6 +42,32 @@ export function Footer() {
               picks, hidden gems, and everything worth doing in the
               neighborhood.
             </p>
+          </div>
+
+          <div className="md:col-span-1">
+            <h3 className="text-sm font-semibold text-foreground mb-4">
+              Explore
+            </h3>
+            <ul className="space-y-3">
+              <li>
+                <Link
+                  href="/spots"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  All Spots
+                </Link>
+              </li>
+              {SPOT_NEIGHBORHOODS.map((n) => (
+                <li key={n.slug}>
+                  <Link
+                    href={`/spots/${n.slug}`}
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {n.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
           <div className="md:col-span-1">

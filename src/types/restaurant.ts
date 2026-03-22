@@ -86,4 +86,8 @@ export type Restaurant = {
   };
   reviews?: RestaurantReview[];
   claimed: boolean;
+  /** Directory: pinned in featured sort */
+  featured?: boolean;
+  /** ISO date for “Newest” sort */
+  listingAddedAt?: string;
 };

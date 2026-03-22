@@ -21,7 +21,7 @@ export function RestaurantPageHeader({ restaurant }: Props) {
           <span key={c} className="inline-flex items-center gap-1.5">
             {i > 0 && <span className="text-border">·</span>}
             <Link
-              href={`/categoria/${slugifyCategory(c)}`}
+              href={`/spots?category=${slugifyCategory(c)}`}
               className="hover:text-foreground hover:underline underline-offset-2"
             >
               {c}

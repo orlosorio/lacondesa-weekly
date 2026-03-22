@@ -301,5 +301,7 @@ export const curiosaRestaurant: Restaurant = {
       "Superfood café and juice bar in Hipódromo Condesa, Mexico City. Cold-pressed juices, smoothies, healing lattes, and all-day breakfast.",
     servesCuisine: ["Juice Bar", "Healthy", "Breakfast", "Vegan"],
   },
+  featured: true,
+  listingAddedAt: "2025-06-01",
   claimed: false,
 };

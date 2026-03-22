@@ -58,6 +58,8 @@ export interface SanityRestaurantDoc {
     text: string;
   }[] | null;
   claimed?: boolean | null;
+  featured?: boolean | null;
+  listingAddedAt?: string | null;
 }
 
 function isDayCode(d: string): d is DayCode {
@@ -180,5 +182,7 @@ export function mapSanityRestaurant(doc: SanityRestaurantDoc): Restaurant | null
       text: r.text,
     })),
     claimed: Boolean(doc.claimed),
+    featured: doc.featured ?? undefined,
+    listingAddedAt: doc.listingAddedAt ?? undefined,
   };
 }

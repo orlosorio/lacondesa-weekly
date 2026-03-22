@@ -1,24 +1,33 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Menu } from "lucide-react";
+import { ChevronDown, Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { cn } from "@/lib/utils";
+import { SPOT_NEIGHBORHOODS } from "@/lib/spots-config";
 
-const navLinks = [
+const secondaryLinks = [
   { href: "/blog", label: "Stories" },
   { href: "/lists", label: "Lists" },
   { href: "/about", label: "About" },
   { href: "/team", label: "Team" },
-  { href: "/submit", label: "Submit opening" },
-  { href: "/advertise", label: "Advertise" },
   { href: "/archive", label: "Archive" },
   { href: "/contact", label: "Contact" },
 ];
 
 export function Navigation() {
+  const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [hoodOpen, setHoodOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -43,16 +52,76 @@ export function Navigation() {
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
+          <nav className="hidden md:flex flex-wrap items-center justify-end gap-x-6 gap-y-2">
+            <Link
+              href="/spots"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Spots
+            </Link>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger
+                className="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors outline-none"
+              >
+                Neighborhoods
+                <ChevronDown className="h-4 w-4 opacity-70" aria-hidden />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="min-w-[12rem]">
+                {SPOT_NEIGHBORHOODS.map((n) => (
+                  <DropdownMenuItem
+                    key={n.slug}
+                    onSelect={() => router.push(`/spots/${n.slug}`)}
+                  >
+                    {n.name}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            <Link
+              href="/submit"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Add a place
+            </Link>
+            <Link
+              href="/advertise"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+            >
+              For businesses
+            </Link>
+
+            <span
+              className="hidden lg:inline text-border select-none"
+              aria-hidden
+            >
+              |
+            </span>
+
+            <Link
+              href="/contact"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Sign in
+            </Link>
+            <Link
+              href="/subscribe"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Sign up
+            </Link>
+
+            {secondaryLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                className="text-sm font-medium text-muted-foreground/90 hover:text-foreground transition-colors"
               >
                 {link.label}
               </Link>
             ))}
+
             <Link
               href="/subscribe"
               className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all h-9 px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground"
@@ -70,10 +139,77 @@ export function Navigation() {
               >
                 <Menu className="h-6 w-6" />
               </SheetTrigger>
-              <SheetContent side="right" className="w-[280px] bg-background border-border">
+              <SheetContent side="right" className="w-[300px] bg-background border-border">
                 <SheetTitle className="sr-only">Navigation menu</SheetTitle>
                 <div className="mt-8 flex flex-col gap-1">
-                  {navLinks.map((link) => (
+                  <Link
+                    href="/spots"
+                    onClick={() => setOpen(false)}
+                    className="rounded-md px-4 py-3 text-base font-medium text-foreground transition-colors hover:bg-secondary"
+                  >
+                    Spots
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => setHoodOpen((v) => !v)}
+                    className="flex w-full items-center justify-between rounded-md px-4 py-3 text-base font-medium text-foreground transition-colors hover:bg-secondary text-left"
+                    aria-expanded={hoodOpen}
+                  >
+                    Neighborhoods
+                    <ChevronDown
+                      className={cn(
+                        "h-4 w-4 transition-transform",
+                        hoodOpen && "rotate-180"
+                      )}
+                      aria-hidden
+                    />
+                  </button>
+                  {hoodOpen && (
+                    <ul className="ml-2 border-l border-border pl-2 space-y-0.5" role="list">
+                      {SPOT_NEIGHBORHOODS.map((n) => (
+                        <li key={n.slug}>
+                          <Link
+                            href={`/spots/${n.slug}`}
+                            onClick={() => setOpen(false)}
+                            className="block rounded-md px-4 py-2 text-sm text-muted-foreground hover:bg-secondary hover:text-foreground"
+                          >
+                            {n.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  <Link
+                    href="/submit"
+                    onClick={() => setOpen(false)}
+                    className="rounded-md px-4 py-3 text-base font-medium text-foreground transition-colors hover:bg-secondary"
+                  >
+                    Add a place
+                  </Link>
+                  <Link
+                    href="/advertise"
+                    onClick={() => setOpen(false)}
+                    className="rounded-md px-4 py-3 text-base font-medium text-foreground transition-colors hover:bg-secondary"
+                  >
+                    For businesses
+                  </Link>
+                  <div className="flex gap-4 px-4 py-2 text-sm">
+                    <Link
+                      href="/contact"
+                      onClick={() => setOpen(false)}
+                      className="text-muted-foreground hover:text-foreground"
+                    >
+                      Sign in
+                    </Link>
+                    <Link
+                      href="/subscribe"
+                      onClick={() => setOpen(false)}
+                      className="text-muted-foreground hover:text-foreground"
+                    >
+                      Sign up
+                    </Link>
+                  </div>
+                  {secondaryLinks.map((link) => (
                     <Link
                       key={link.href}
                       href={link.href}

@@ -120,6 +120,8 @@ export const RESTAURANTS: Restaurant[] = [
         text: "Great coffee and bread. Weekends can mean a line but it’s worth the wait. I’d love more savory vegan options.",
       },
     ],
+    featured: false,
+    listingAddedAt: "2024-06-15",
     claimed: false,
   },
   {
@@ -198,6 +200,8 @@ export const RESTAURANTS: Restaurant[] = [
         text: "Best suadero tacos for blocks. Come early on Friday or you’ll miss a seat.",
       },
     ],
+    featured: false,
+    listingAddedAt: "2024-08-01",
     claimed: true,
   },
   {
@@ -259,6 +263,8 @@ export const RESTAURANTS: Restaurant[] = [
     ],
     rating: { average: 4.8, count: 89 },
     reviews: [],
+    featured: false,
+    listingAddedAt: "2024-03-10",
     claimed: false,
   },
   {
@@ -336,6 +342,8 @@ export const RESTAURANTS: Restaurant[] = [
         text: "Flawless pasta and a warm room. We did the tasting menu and pacing was spot on.",
       },
     ],
+    featured: false,
+    listingAddedAt: "2024-01-20",
     claimed: true,
   },
   curiosaRestaurant,

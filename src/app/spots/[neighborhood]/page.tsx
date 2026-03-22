@@ -1,31 +1,40 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import Image from "next/image";
-import {
-  getAllRestaurants,
-  getRestaurantsByNeighborhood,
-} from "@/lib/restaurants-service";
+import { getAllRestaurants } from "@/lib/restaurants-service";
 import { defaultMetadata } from "@/lib/metadata";
+import {
+  getNeighborhoodBySlug,
+  isSpotNeighborhoodSlug,
+} from "@/lib/spots-config";
+import { SpotsDirectoryClient } from "@/components/spots/spots-directory-client";
+
+export const revalidate = 120;
 
 type PageProps = {
   params: Promise<{ neighborhood: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 
 export async function generateStaticParams() {
-  const all = await getAllRestaurants();
-  const slugs = new Set(all.map((r) => r.neighborhood.slug));
-  return [...slugs].map((neighborhood) => ({ neighborhood }));
+  return [
+    { neighborhood: "condesa" },
+    { neighborhood: "hipodromo" },
+    { neighborhood: "roma-norte" },
+    { neighborhood: "roma-sur" },
+    { neighborhood: "juarez" },
+  ];
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { neighborhood } = await params;
-  const list = await getRestaurantsByNeighborhood(neighborhood);
-  if (list.length === 0) return defaultMetadata;
-  const name = list[0]!.neighborhood.name;
-  const title = `Places in ${name}, Mexico City | La Condesa Weekly`;
-  const description = `Directory of restaurants and cafés in ${name}, Mexico City. Hours, menus, and addresses.`;
+  if (!isSpotNeighborhoodSlug(neighborhood)) return defaultMetadata;
+
+  const meta = getNeighborhoodBySlug(neighborhood);
+  const name = meta?.name ?? neighborhood;
+  const title = `Best Spots in ${name}, Mexico City | La Condesa`;
+  const description = `Hand-picked restaurants, cafés, and local favorites in ${name}, CDMX — hours, photos, and links.`;
   const canonical = `https://lacondesa.mx/spots/${neighborhood}`;
+
   return {
     ...defaultMetadata,
     title,
@@ -40,57 +49,23 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default async function NeighborhoodSpotsPage({ params }: PageProps) {
+export default async function NeighborhoodSpotsIndexPage({
+  params,
+  searchParams,
+}: PageProps) {
   const { neighborhood } = await params;
-  const list = await getRestaurantsByNeighborhood(neighborhood);
-  if (list.length === 0) notFound();
+  if (!isSpotNeighborhoodSlug(neighborhood)) notFound();
 
-  const title = list[0]!.neighborhood.name;
+  const spots = await getAllRestaurants();
+  const sp = await searchParams;
+  const meta = getNeighborhoodBySlug(neighborhood);
 
   return (
-    <div className="min-h-screen bg-background pt-20 lg:pt-24 pb-16">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="font-serif text-3xl sm:text-4xl font-semibold text-foreground">
-          {title}
-        </h1>
-        <p className="mt-2 text-muted-foreground max-w-2xl">
-          Restaurants and spots in this area. Each listing includes hours, contact info, and a link to the official site.
-        </p>
-        <ul className="mt-10 grid gap-4 sm:grid-cols-2" role="list">
-          {list.map((r) => {
-            const cover = r.images.find((i) => i.isCover) ?? r.images[0];
-            const href = `/spots/${r.neighborhood.slug}/${r.slug}`;
-            return (
-              <li key={r.id}>
-                <Link
-                  href={href}
-                  className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card ring-1 ring-foreground/5 transition-shadow hover:shadow-md"
-                >
-                  {cover && (
-                    <div className="relative aspect-[16/9] bg-muted">
-                      <Image
-                        src={cover.url}
-                        alt={`${r.name} — ${cover.alt}`}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 640px) 100vw, 50vw"
-                      />
-                    </div>
-                  )}
-                  <div className="p-4">
-                    <p className="text-xs uppercase tracking-wide text-muted-foreground">
-                      {r.category.join(" · ")}
-                    </p>
-                    <h2 className="font-serif text-lg font-semibold text-foreground group-hover:underline underline-offset-2">
-                      {r.name}
-                    </h2>
-                  </div>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-    </div>
+    <SpotsDirectoryClient
+      spots={spots}
+      searchParams={sp}
+      fixedNeighborhoodSlug={neighborhood}
+      neighborhoodIntro={meta?.intro}
+    />
   );
 }
