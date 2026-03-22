@@ -203,6 +203,74 @@ export const listiclesQuery = groq`
   }
 `;
 
+export const allPublishedRestaurantsQuery = groq`
+  *[_type == "restaurant" && published == true] | order(name asc) {
+    _id,
+    name,
+    "slug": slug.current,
+    neighborhoodName,
+    "neighborhoodSlug": lower(neighborhoodSlug),
+    category,
+    description,
+    features,
+    street,
+    colonia,
+    city,
+    postalCode,
+    latitude,
+    longitude,
+    phone,
+    website,
+    instagram,
+    facebook,
+    googleMaps,
+    hours[] { day, open, close, closed },
+    images[] { image, alt, isCover },
+    menu[] {
+      category,
+      items[] { name, description, price }
+    },
+    ratingAverage,
+    ratingCount,
+    reviews[] { author, rating, date, text },
+    claimed
+  }
+`;
+
+export const restaurantBySlugsQuery = groq`
+  *[_type == "restaurant" && published == true && slug.current == $restaurantSlug && lower(neighborhoodSlug) == $neighborhoodSlug][0] {
+    _id,
+    name,
+    "slug": slug.current,
+    neighborhoodName,
+    "neighborhoodSlug": lower(neighborhoodSlug),
+    category,
+    description,
+    features,
+    street,
+    colonia,
+    city,
+    postalCode,
+    latitude,
+    longitude,
+    phone,
+    website,
+    instagram,
+    facebook,
+    googleMaps,
+    hours[] { day, open, close, closed },
+    images[] { image, alt, isCover },
+    menu[] {
+      category,
+      items[] { name, description, price }
+    },
+    ratingAverage,
+    ratingCount,
+    reviews[] { author, rating, date, text },
+    claimed
+  }
+`;
+
 export const siteSettingsQuery = groq`
   *[_type == "siteSettings"][0] {
     subscriberCount,

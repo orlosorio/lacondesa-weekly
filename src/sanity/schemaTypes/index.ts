@@ -6,7 +6,17 @@ import { siteSettings } from "./siteSettings";
 import { newOpening } from "./newOpening";
 import { teamMember } from "./teamMember";
 import { listicle } from "./listicle";
+import { restaurant } from "./restaurant";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [article, testimonial, archiveIssue, siteSettings, newOpening, teamMember, listicle],
+  types: [
+    article,
+    testimonial,
+    archiveIssue,
+    siteSettings,
+    newOpening,
+    teamMember,
+    listicle,
+    restaurant,
+  ],
 };

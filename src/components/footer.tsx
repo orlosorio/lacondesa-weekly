@@ -13,16 +13,16 @@ function TikTokIcon() {
 const quickLinks = [
   { href: "/about", label: "About" },
   { href: "/blog", label: "Blog" },
-  { href: "/listas", label: "Listas" },
-  { href: "/equipo", label: "Equipo" },
+  { href: "/lists", label: "Lists" },
+  { href: "/team", label: "Team" },
   { href: "/advertise", label: "Advertise" },
   { href: "/archive", label: "Archive" },
-  { href: "/contacto", label: "Contacto" },
+  { href: "/contact", label: "Contact" },
   { href: "/privacy", label: "Privacy" },
 ];
 
 const businessLinks = [
-  { href: "/nueva-apertura", label: "Comparte tu apertura" },
+  { href: "/submit", label: "Submit opening" },
 ];
 
 export function Footer() {
@@ -63,7 +63,7 @@ export function Footer() {
 
           <div className="md:col-span-1">
             <h3 className="text-sm font-semibold text-foreground mb-4">
-              Para negocios
+              For businesses
             </h3>
             <ul className="space-y-3">
               {businessLinks.map((link) => (

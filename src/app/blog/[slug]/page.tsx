@@ -5,7 +5,11 @@ import { Badge } from "@/components/ui/badge";
 import { EmailSignup } from "@/components/email-signup";
 import { StickySignupBar } from "@/components/sticky-signup-bar";
 import { ArticleBody } from "@/components/portable-text";
-import { getArticleBySlug, getArticleSlugs, getArticles } from "@/sanity/fetch";
+import {
+  getArticleBySlug,
+  getArticleSlugs,
+  getArticles,
+} from "@/sanity/fetch";
 import { urlFor } from "@/sanity/image";
 import { articles as fallbackArticles } from "@/lib/data";
 import { getBlogPostImageUrl } from "@/lib/blog-images";
@@ -115,7 +119,45 @@ export default async function BlogArticlePage({ params }: PageProps) {
   }).catch(() => {});
   // #endregion
 
-  const relatedStatic = fallbackArticles.filter((a) => a.slug !== slug).slice(0, 3);
+  /** Related stories exclude "New Openings" (separate carousel) for now. */
+  const EXCLUDE_RELATED_CATEGORY = "New Openings";
+  const { sanityArticles, usingSanity: hasSanityArticleList } =
+    await getArticles();
+
+  const relatedItems =
+    hasSanityArticleList && sanityArticles?.length
+      ? sanityArticles
+          .filter(
+            (a) =>
+              a.slug !== slug &&
+              a.category !== EXCLUDE_RELATED_CATEGORY &&
+              a.hasBody
+          )
+          .slice(0, 3)
+          .map((a) => ({
+            slug: a.slug,
+            title: a.title,
+            category: a.category,
+            date: a.date,
+            imageSrc: a.image
+              ? urlFor(a.image).width(600).quality(80).url()
+              : getBlogPostImageUrl(a.slug, 600),
+          }))
+      : fallbackArticles
+          .filter(
+            (a) =>
+              a.slug !== slug &&
+              a.category !== EXCLUDE_RELATED_CATEGORY &&
+              Boolean(a.body?.length)
+          )
+          .slice(0, 3)
+          .map((a) => ({
+            slug: a.slug,
+            title: a.title,
+            category: a.category,
+            date: a.date,
+            imageSrc: getBlogPostImageUrl(a.slug, 600),
+          }));
 
   const author = (source as typeof sanityArticle | typeof article & {
     author?: { _id: string; name: string; slug?: string | null } | null;
@@ -208,7 +250,7 @@ export default async function BlogArticlePage({ params }: PageProps) {
               More from La Condesa Weekly
             </h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-              {relatedStatic.map((a) => (
+              {relatedItems.map((a) => (
                 <Link
                   key={a.slug}
                   href={`/blog/${a.slug}`}
@@ -216,7 +258,7 @@ export default async function BlogArticlePage({ params }: PageProps) {
                 >
                   <div className="relative aspect-[16/10] overflow-hidden rounded-t-xl">
                     <Image
-                      src={getBlogPostImageUrl(a.slug, 600)}
+                      src={a.imageSrc}
                       alt={a.title}
                       fill
                       className="object-cover object-center group-hover:scale-105 transition-transform duration-300"
