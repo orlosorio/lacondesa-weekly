@@ -10,6 +10,10 @@ import {
 } from "@/sanity/queries";
 import { urlFor } from "@/sanity/image";
 import { getFingerprint } from "@/lib/fingerprint";
+import {
+  isWallOfLoveDemoId,
+  mergeWallOfLoveDemoRows,
+} from "@/lib/wall-of-love-demo";
 import { getUserVote, recordVote } from "@/lib/voteTracking";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -96,7 +100,8 @@ export function WallOfLoveClient() {
           wallOfLoveRestaurantsByMonthQuery,
           { month }
         );
-        if (!cancelled) setRestaurants(data ?? []);
+        if (!cancelled)
+          setRestaurants(mergeWallOfLoveDemoRows(month, data ?? []));
       } catch {
         if (!cancelled) setRestaurants([]);
       } finally {
@@ -157,6 +162,26 @@ export function WallOfLoveClient() {
       const existingLocalVote = getUserVote(restaurantId);
       if (existingLocalVote) {
         showMessage("Looks like you already voted for this one!");
+        return;
+      }
+
+      if (isWallOfLoveDemoId(restaurantId)) {
+        setVotingId(restaurantId);
+        recordVote(restaurantId, voteType);
+        setRestaurants((prev) =>
+          prev.map((r) =>
+            r._id === restaurantId
+              ? {
+                  ...r,
+                  upvotes:
+                    voteType === "upvote" ? r.upvotes + 1 : r.upvotes,
+                  downvotes:
+                    voteType === "downvote" ? r.downvotes + 1 : r.downvotes,
+                }
+              : r
+          )
+        );
+        setVotingId(null);
         return;
       }
 
