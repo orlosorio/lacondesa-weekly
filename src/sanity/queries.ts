@@ -290,3 +290,54 @@ export const siteSettingsQuery = groq`
     twitterCard
   }
 `;
+
+/** Stories from La Condesa — collection (lightweight) */
+export const allHistoriasQuery = groq`
+  *[_type == "historia"] | order(featured desc, coalesce(publishedAt, _createdAt) desc) {
+    _id,
+    name,
+    "slug": slug.current,
+    category,
+    tagline,
+    featured,
+    heroPhoto,
+    publishedAt
+  }
+`;
+
+/** Full story for profile page */
+export const historiaBySlugQuery = groq`
+  *[_type == "historia" && slug.current == $slug][0] {
+    _id,
+    _createdAt,
+    name,
+    "slug": slug.current,
+    category,
+    tagline,
+    heroPhoto,
+    summary,
+    metadata,
+    pullQuote,
+    interview,
+    secondaryPhotos,
+    publishedAt
+  }
+`;
+
+/** Chronological “previous” story (older than current) for bottom nav */
+export const nextHistoriaQuery = groq`
+  *[_type == "historia" && coalesce(publishedAt, _createdAt) < $currentPublishedAt] 
+  | order(coalesce(publishedAt, _createdAt) desc) [0] {
+    name,
+    "slug": slug.current,
+    tagline,
+    heroPhoto,
+    publishedAt
+  }
+`;
+
+export const allHistoriaSlugsQuery = groq`
+  *[_type == "historia" && defined(slug.current)] {
+    "slug": slug.current
+  }
+`;

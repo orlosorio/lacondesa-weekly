@@ -1,0 +1,88 @@
+/* Historias de La Condesa — editorial scope */
+.historias-editorial {
+  --historias-paper: #faf7f2;
+  --historias-ink: #1a1612;
+  --historias-accent: #c4552a;
+  --historias-muted: #6b6358;
+  --historias-rule: rgba(26, 22, 18, 0.12);
+  --historias-next-bg: #2c1810;
+  background-color: var(--historias-paper);
+  color: var(--historias-ink);
+}
+
+.font-historias-body {
+  font-family: var(--font-historias-body), Georgia, serif;
+}
+
+/* Display headlines use root Playfair via Tailwind font-serif */
+
+/* Scroll-triggered card */
+.historia-card-observe {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.historia-card-observe.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Pull quote */
+.historia-pull-quote-observe {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.9s ease-out,
+    transform 0.9s ease-out;
+}
+
+.historia-pull-quote-observe.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Film grain overlay (subtle) */
+.historias-grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.055;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Hero image gentle zoom on load */
+@keyframes historiasHeroIn {
+  from {
+    opacity: 0;
+    transform: scale(1.04);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.historias-hero-image {
+  animation: historiasHeroIn 1.4s ease-out forwards;
+}
+
+/* Horizontal strip: smooth scroll on touch */
+.historias-photo-strip {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(196, 85, 42, 0.35) transparent;
+}
+
+.historias-photo-strip::-webkit-scrollbar {
+  height: 6px;
+}
+
+.historias-photo-strip::-webkit-scrollbar-thumb {
+  background: rgba(196, 85, 42, 0.35);
+  border-radius: 3px;
+}

@@ -7,6 +7,7 @@ import { newOpening } from "./newOpening";
 import { teamMember } from "./teamMember";
 import { listicle } from "./listicle";
 import { restaurant } from "./restaurant";
+import { historia } from "./historia";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -18,5 +19,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     teamMember,
     listicle,
     restaurant,
+    historia,
   ],
 };

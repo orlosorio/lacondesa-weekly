@@ -21,6 +21,7 @@ export default defineConfig({
           .title("Content")
           .items([
             S.documentTypeListItem("article").title("Articles"),
+            S.documentTypeListItem("historia").title("Stories (La Condesa)"),
             S.documentTypeListItem("restaurant").title("Restaurant profiles"),
             S.documentTypeListItem("newOpening").title("New Openings"),
             S.documentTypeListItem("archiveIssue").title("Archive Issues"),

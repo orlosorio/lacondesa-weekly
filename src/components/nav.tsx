@@ -16,6 +16,8 @@ import { SPOT_NEIGHBORHOODS } from "@/lib/spots-config";
 
 const secondaryLinks = [
   { href: "/blog", label: "Stories" },
+  { href: "/stories", label: "Condesa stories" },
+  { href: "/historias", label: "Historias" },
   { href: "/lists", label: "Lists" },
   { href: "/about", label: "About" },
   { href: "/team", label: "Team" },

@@ -41,6 +41,7 @@ With the dev server running:
 You’ll see the Sanity Studio where you manage:
 
 - **Articles** – blog posts (title, slug, excerpt, category, date, featured image, body with rich text).
+- **Stories (La Condesa)** – “Humans of”-style portrait stories for the **`/stories`** section (name, slug, category, hero photo, summary, interview Q&A, optional secondary photos). Publish at least one document for the collection page to list entries.
 - **Archive Issues** – newsletter issues (number, title, date, slug).
 - **Testimonials** – reader quotes for the homepage.
 - **Site Settings** – single doc for subscriber count, open rate, social links, hero image.
@@ -88,6 +89,14 @@ SANITY_API_READ_TOKEN="your-token"
 ```
 
 Create the token under **API** → **Tokens** in the Sanity dashboard.
+
+To refresh **`/stories`** after publishing in Sanity (on-demand revalidation), set a random secret and call the webhook:
+
+```env
+REVALIDATE_SECRET="your-long-random-string"
+```
+
+Then configure a Sanity webhook (Manage → API → Webhooks) to `POST` to `https://your-domain.com/api/revalidate?secret=YOUR_SECRET` on create/update/delete of **historia** documents. See `.env.local.example` for variable names.
 
 ---
 
