@@ -8,6 +8,8 @@ import { teamMember } from "./teamMember";
 import { listicle } from "./listicle";
 import { restaurant } from "./restaurant";
 import { historia } from "./historia";
+import { wallOfLoveRestaurant } from "./wallOfLoveRestaurant";
+import { wallOfLoveVote } from "./wallOfLoveVote";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -20,5 +22,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     listicle,
     restaurant,
     historia,
+    wallOfLoveRestaurant,
+    wallOfLoveVote,
   ],
 };

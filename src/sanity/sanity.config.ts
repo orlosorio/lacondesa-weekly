@@ -28,6 +28,22 @@ export default defineConfig({
             S.documentTypeListItem("testimonial").title("Testimonials"),
             S.documentTypeListItem("teamMember").title("Team"),
             S.documentTypeListItem("listicle").title("Listicles"),
+            S.listItem()
+              .title("Wall of Love — Pending")
+              .child(
+                S.documentList()
+                  .title("Pending restaurant submissions")
+                  .filter(
+                    '_type == "wallOfLoveRestaurant" && approved == false'
+                  )
+                  .defaultOrdering([
+                    { field: "submittedAt", direction: "desc" },
+                  ])
+              ),
+            S.documentTypeListItem("wallOfLoveRestaurant").title(
+              "Wall of Love — Restaurants"
+            ),
+            S.documentTypeListItem("wallOfLoveVote").title("Wall of Love — Votes"),
             S.divider(),
             S.listItem()
               .title("Site Settings")

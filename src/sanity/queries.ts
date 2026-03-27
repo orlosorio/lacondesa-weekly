@@ -341,3 +341,44 @@ export const allHistoriaSlugsQuery = groq`
     "slug": slug.current
   }
 `;
+
+/** Wall of Love — approved entries for a given month (YYYY-MM), by net score */
+export const getRestaurantsQuery = groq`
+  *[_type == "wallOfLoveRestaurant" && approved == true && month == $month]
+  | order((upvotes - downvotes) desc, submittedAt asc) {
+    _id,
+    name,
+    "slug": slug.current,
+    submittedBy,
+    description,
+    cuisine,
+    photo,
+    upvotes,
+    downvotes,
+    submittedAt,
+    month
+  }
+`;
+
+/** Alias for imports that prefer the shorter name */
+export const wallOfLoveRestaurantsByMonthQuery = getRestaurantsQuery;
+
+export function getCurrentMonth(): string {
+  return new Date().toISOString().slice(0, 7);
+}
+
+/** Duplicate-check: fingerprint + restaurant + month */
+export const wallOfLoveExistingVoteByFingerprintQuery = groq`
+  *[_type == "wallOfLoveVote" && restaurantId == $restaurantId && fingerprint == $fingerprint && month == $month][0] {
+    _id,
+    voteType
+  }
+`;
+
+/** Duplicate-check: IP + restaurant + month */
+export const wallOfLoveExistingVoteByIpQuery = groq`
+  *[_type == "wallOfLoveVote" && restaurantId == $restaurantId && ip == $ip && month == $month][0] {
+    _id,
+    voteType
+  }
+`;

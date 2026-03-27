@@ -8,6 +8,7 @@ import { urlFor } from "@/sanity/image";
 import { getBlogPostImageUrl } from "@/lib/blog-images";
 import { ArrowRight, Utensils, Calendar, Gem, MapPin } from "lucide-react";
 import { NewOpeningsCarousel } from "@/components/new-openings-carousel";
+import { HomeCoverageGrid } from "@/components/home-coverage-grid";
 
 const iconMap: Record<string, React.ReactNode> = {
   utensils: <Utensils className="h-6 w-6 text-primary" />,
@@ -95,6 +96,8 @@ export default async function HomePage() {
 
       {/* New Openings carousel */}
       {newOpenings.length > 0 && <NewOpeningsCarousel openings={newOpenings} />}
+
+      <HomeCoverageGrid />
 
       {/* Latest Issue */}
       <section className="py-16 lg:py-24 bg-background">

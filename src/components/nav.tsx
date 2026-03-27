@@ -18,6 +18,7 @@ const secondaryLinks = [
   { href: "/blog", label: "Stories" },
   { href: "/stories", label: "Condesa stories" },
   { href: "/historias", label: "Historias" },
+  { href: "/wall-of-love", label: "Wall of Love" },
   { href: "/lists", label: "Lists" },
   { href: "/about", label: "About" },
   { href: "/team", label: "Team" },
