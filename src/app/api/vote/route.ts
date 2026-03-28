@@ -45,9 +45,14 @@ export async function POST(request: Request) {
   let writeClient;
   try {
     writeClient = getSanityWriteClient();
-  } catch {
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : String(e);
+    const missingWriteToken = msg.includes("Missing SANITY_API_WRITE_TOKEN");
     return Response.json(
-      { error: "Voting is temporarily unavailable." },
+      {
+        error: "Voting is temporarily unavailable.",
+        ...(missingWriteToken ? { code: "SANITY_WRITE_TOKEN_MISSING" } : {}),
+      },
       { status: 503 }
     );
   }
@@ -99,23 +104,25 @@ export async function POST(request: Request) {
 
   try {
     await writeClient
-      .patch(restaurantId)
-      .setIfMissing({ upvotes: 0, downvotes: 0 })
-      .inc({ [field]: 1 })
+      .transaction()
+      .patch(restaurantId, (p) =>
+        p.setIfMissing({ upvotes: 0, downvotes: 0 }).inc({ [field]: 1 })
+      )
+      .create({
+        _type: "wallOfLoveVote",
+        restaurantId,
+        voteType,
+        ip,
+        month,
+        votedAt: new Date().toISOString(),
+        ...(fingerprint ? { fingerprint } : {}),
+      })
       .commit();
 
-    await writeClient.create({
-      _type: "wallOfLoveVote",
-      restaurantId,
-      voteType,
-      fingerprint: fingerprint || null,
-      ip,
-      month,
-      votedAt: new Date().toISOString(),
-    });
-
     return Response.json({ success: true });
-  } catch {
+  } catch (err) {
+    const errMsg = err instanceof Error ? err.message : String(err);
+    console.error("[api/vote] Sanity mutation failed:", errMsg);
     return Response.json({ error: "Vote failed" }, { status: 500 });
   }
 }

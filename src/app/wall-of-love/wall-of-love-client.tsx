@@ -200,10 +200,16 @@ export function WallOfLoveClient() {
           body: JSON.stringify({ restaurantId, voteType, fingerprint }),
         });
 
-        if (res.status === 429) {
-          const data = (await res.json().catch(() => ({}))) as {
-            error?: string;
-          };
+        const status = res.status;
+        const text = await res.text();
+        let data: { error?: string } = {};
+        try {
+          data = JSON.parse(text) as { error?: string };
+        } catch {
+          /* non-JSON body (e.g. proxy error page) */
+        }
+
+        if (status === 429) {
           const rateLimited =
             data.error === "Too many requests. Slow down.";
           if (rateLimited) {
@@ -215,8 +221,12 @@ export function WallOfLoveClient() {
           return;
         }
 
-        if (!res.ok) {
-          showMessage("Something went wrong. Try again?");
+        if (status < 200 || status >= 300) {
+          showMessage(
+            typeof data.error === "string"
+              ? data.error
+              : `Something went wrong (${status}). Try again?`
+          );
           return;
         }
 
