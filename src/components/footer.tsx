@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Instagram } from "lucide-react";
+import { ArrowRight, Instagram, Mail } from "lucide-react";
 import { SPOT_NEIGHBORHOODS } from "@/lib/spots-config";
 
 function TikTokIcon() {
@@ -30,6 +30,35 @@ export function Footer() {
   return (
     <footer className="bg-secondary border-t border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+        <section
+          aria-labelledby="footer-newsletter-title"
+          className="mb-10 flex flex-col gap-6 rounded-2xl border border-primary/15 bg-background p-6 sm:p-8 lg:flex-row lg:items-center lg:justify-between"
+        >
+          <div className="flex items-start gap-4">
+            <span className="hidden h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary sm:flex">
+              <Mail className="h-5 w-5" aria-hidden="true" />
+            </span>
+            <div>
+              <h2
+                id="footer-newsletter-title"
+                className="font-serif text-2xl font-semibold text-foreground sm:text-3xl"
+              >
+                A little more neighborhood in your inbox.
+              </h2>
+              <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">
+                New openings, hidden gems, and weekend plans. Get the best of La
+                Condesa in one free weekly email.
+              </p>
+            </div>
+          </div>
+          <Link
+            href="/subscribe"
+            className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+          >
+            Subscribe for free
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
+        </section>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12">
           <div className="md:col-span-1">
             <Link href="/" className="inline-block">
