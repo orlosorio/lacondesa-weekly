@@ -59,6 +59,7 @@ body:has(.home-editorial) {
 .he-link-list li>a:hover { color: var(--primary); }
 .he-link-list li>p { font-size: 14px; line-height: 1.8; color: var(--muted-foreground); margin-top: 3px; max-width: 570px; }
 .he-guide-list li + li { margin-top: 24px; }
+.he-coverage-list h3 { font: 400 24px/1.4 var(--font-caslon), Georgia, serif; padding-block: 6px; }
 .he-community>p a { color: var(--foreground); text-decoration: underline; text-decoration-color: var(--border); }
 .he-community>p a:hover { text-decoration-color: currentColor; }
 .he-newsletter { max-width: 650px; margin: 85px auto 0; scroll-margin-top: 35px; }
@@ -110,6 +111,7 @@ body:has(.home-editorial)>footer { display: none; }
   .he-section { margin-top: 60px; }
   .he-section h2 { font-size: 29px; }
   .he-link-list li>a { font-size: 23px; }
+  .he-coverage-list h3 { font-size: 23px; }
   .he-page-index { gap: 0 21px; }
   .he-newsletter { margin-top: 62px; }
   .he-newsletter h2 { font-size: 29px; }

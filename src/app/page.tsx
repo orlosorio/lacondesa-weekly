@@ -2,6 +2,19 @@ import Link from "next/link";
 import { EmailSignup } from "@/components/email-signup";
 import { getArticles, getListicles } from "@/sanity/fetch";
 
+const upcomingCoverage = [
+  { title: "Restaurants", description: "New tables, neighborhood classics, and honest reviews worth keeping close." },
+  { title: "Coffee & cafés", description: "Espresso bars, slow mornings, and a good corner to spend an afternoon." },
+  { title: "People & local stories", description: "The neighbors, makers, and everyday lives that give this place its character." },
+  { title: "Culture & events", description: "Galleries, exhibitions, small stages, and what is happening around the corner." },
+  { title: "Nightlife & bars", description: "Mezcalerías, wine bars, and the places where an evening unfolds." },
+  { title: "Parks & outdoors", description: "Walking routes, green spaces, and a little more time outside." },
+  { title: "Hotels & stays", description: "Thoughtful stays, rooftops, and addresses to share with visiting friends." },
+  { title: "Wellness", description: "Studios, movement, spas, and rituals for a slower day in the city." },
+  { title: "Shopping", description: "Independent shops, local design, and the people making things here." },
+  { title: "Everyday services", description: "Barbers, salons, and useful neighborhood addresses, explored through stories and guides." },
+];
+
 export default async function HomePage() {
   const [{ articles, sanityArticles, usingSanity }, guides] = await Promise.all([
     getArticles(),
@@ -20,6 +33,7 @@ export default async function HomePage() {
             {posts.length > 0 && <a href="#journal">Read</a>}
             <a href="#people">People</a>
             {guides.length > 0 && <a href="#guides">Guides</a>}
+            <a href="#coverage">What we cover</a>
             <a href="#community">Get involved</a>
           </nav>
         </header>
@@ -66,6 +80,20 @@ export default async function HomePage() {
             <Link href="/lists" className="he-text-link">All neighborhood guides ↗</Link>
           </section>
         )}
+
+        <section className="he-section" id="coverage" aria-labelledby="he-coverage-heading">
+          <p className="he-label">What we’ll cover · More stories coming soon</p>
+          <h2 id="he-coverage-heading">Across the neighborhood.</h2>
+          <p>We’re expanding our coverage, one story at a time. Expect interviews, reviews, practical tips, and carefully chosen lists across these corners of neighborhood life.</p>
+          <ul className="he-link-list he-coverage-list">
+            {upcomingCoverage.map((category) => (
+              <li key={category.title}>
+                <h3>{category.title}</h3>
+                <p>{category.description}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
 
         <section className="he-section he-community" id="community" aria-labelledby="he-community-heading">
           <p className="he-label">A neighborhood made together</p>
