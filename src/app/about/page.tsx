@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { EmailSignup } from "@/components/email-signup";
 import { contentPillars } from "@/lib/data";
 import { Utensils, Calendar, Gem, MapPin } from "lucide-react";
@@ -32,6 +33,13 @@ export default function AboutPage() {
               neighborhoods.
             </p>
           </div>
+
+          <section className="mb-16 max-w-2xl" aria-labelledby="about-team-heading">
+            <p className="he-label mb-3">Behind the stories</p>
+            <h2 id="about-team-heading" className="text-3xl mb-4">Meet the people behind La Condesa.</h2>
+            <p className="text-muted-foreground">Get to know Orlando Osorio, Monica Belot, and the writers and collaborators who bring their own perspective to the neighborhood.</p>
+            <Link href="/team" className="he-text-link">Meet our team ↗</Link>
+          </section>
 
           {/* Story */}
           <div className="prose-condesa max-w-prose">
