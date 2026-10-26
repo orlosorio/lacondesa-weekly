@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { getArticleSlugs, getListicleSlugs } from "@/sanity/fetch";
 import { HISTORIAS } from "@/lib/historias-data";
 import { getAllRestaurants } from "@/lib/restaurants-service";
 import { SPOT_NEIGHBORHOODS } from "@/lib/spots-config";
@@ -8,18 +9,17 @@ import { allHistoriaSlugsQuery } from "@/sanity/queries";
 const base = "https://lacondesa.mx";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const restaurants = await getAllRestaurants();
+  const [restaurants, articleSlugs, listicleSlugs] = await Promise.all([
+    getAllRestaurants(), getArticleSlugs(), getListicleSlugs(),
+  ]);
 
   const staticPages: MetadataRoute.Sitemap = [
     { url: base, lastModified: new Date(), changeFrequency: "weekly", priority: 1 },
     { url: `${base}/about`, changeFrequency: "monthly", priority: 0.7 },
     { url: `${base}/blog`, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/lists`, changeFrequency: "weekly", priority: 0.85 },
-    { url: `${base}/listas`, changeFrequency: "weekly", priority: 0.85 },
     { url: `${base}/team`, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${base}/equipo`, changeFrequency: "monthly", priority: 0.7 },
     { url: `${base}/contact`, changeFrequency: "yearly", priority: 0.5 },
-    { url: `${base}/contacto`, changeFrequency: "yearly", priority: 0.5 },
     { url: `${base}/subscribe`, changeFrequency: "monthly", priority: 0.6 },
     { url: `${base}/submit`, changeFrequency: "monthly", priority: 0.65 },
     { url: `${base}/nueva-apertura`, changeFrequency: "monthly", priority: 0.65 },
@@ -78,5 +78,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       : new Date(),
   }));
 
-  return [...staticPages, ...historiasPages, ...cmsStoryPages, ...profiles];
+  const editorialPages: MetadataRoute.Sitemap = [
+    ...articleSlugs.map((slug) => ({ url: `${base}/blog/${slug}`, changeFrequency: "monthly" as const, priority: 0.85 })),
+    ...listicleSlugs.map((slug) => ({ url: `${base}/lists/${slug}`, changeFrequency: "monthly" as const, priority: 0.85 })),
+  ];
+
+  return [...staticPages, ...editorialPages, ...historiasPages, ...cmsStoryPages, ...profiles];
 }

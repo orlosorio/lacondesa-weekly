@@ -4,10 +4,10 @@ import { Analytics } from "@vercel/analytics/react";
 import { getSiteSettings } from "@/sanity/fetch";
 import { urlFor } from "@/sanity/image";
 import "./globals.css";
+import "./home-editorial.css";
 import { Navigation } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import { CookieBanner } from "@/components/cookie-banner";
-import { ExitIntentPopup } from "@/components/exit-intent-popup";
 
 const DEFAULT_TITLE = "La Condesa Weekly | Your Guide to the Best of La Condesa";
 const DEFAULT_TEMPLATE = "%s | La Condesa Weekly";
@@ -95,10 +95,9 @@ export default function RootLayout({
         className={`${dmSans.variable} ${playfairDisplay.variable} ${caslon.variable} ${plexSans.variable} ${plexMono.variable} font-sans antialiased`}
       >
         <Navigation />
-        <main id="home-content">{children}</main>
+        <div id="home-content" tabIndex={-1}>{children}</div>
         <Footer />
         <CookieBanner />
-        <ExitIntentPopup />
         <Analytics />
       </body>
     </html>

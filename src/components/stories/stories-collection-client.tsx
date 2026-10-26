@@ -36,13 +36,11 @@ export function StoriesCollectionClient({
 
   if (historias.length === 0) {
     return (
-      <div className="stories-empty">
-        <p>No stories published yet.</p>
-        <p style={{ marginTop: "0.75rem" }}>
-          Add a <strong>Story</strong> document in{" "}
-          <a href="/studio">Sanity Studio</a> → Stories (La Condesa), then publish.
-        </p>
-      </div>
+      <main className="mx-auto max-w-3xl px-6 pb-24 pt-36">
+        <h1 className="font-serif text-4xl">People of La Condesa</h1>
+        <p className="mt-6 text-muted-foreground">Our first conversations are on the way. In the meantime, explore the latest stories from the neighborhood.</p>
+        <Link href="/blog" className="mt-8 inline-flex min-h-11 items-center text-sm underline underline-offset-4">Read the journal ↗</Link>
+      </main>
     );
   }
 
@@ -50,7 +48,7 @@ export function StoriesCollectionClient({
     <>
       <section className="stories-collection-hero" aria-labelledby="stories-hero-heading">
         <h1 id="stories-hero-heading" className="stories-collection-hero__title stories-display">
-          Stories from La Condesa
+          People of La Condesa
         </h1>
         <p className="stories-collection-hero__subtitle">
           The people who give this neighborhood its soul.

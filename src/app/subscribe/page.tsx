@@ -33,16 +33,14 @@ export default function SubscribePage() {
           Your weekly guide to the best of La Condesa
         </h1>
         <p className="text-lg text-muted-foreground mb-8">
-          Join thousands of neighbors who start their Thursday with the best of
-          what&apos;s happening in the neighborhood.
+          Stories, neighborhood guides, and a few good places to keep close.
+          A free letter in your inbox every Thursday.
         </p>
 
         <div className="max-w-[550px] mx-auto mb-10">
           <EmailSignup
             variant="hero"
             ctaText="Subscribe - It's Free"
-            showSocialProof
-            socialProofText="Join 2,000+ Condesa insiders"
           />
         </div>
 

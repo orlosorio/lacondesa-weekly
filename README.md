@@ -1,6 +1,17 @@
 # La Condesa Weekly
 
-A Next.js site for the La Condesa Weekly newsletter (lacondesa.mx), with content managed in Sanity CMS.
+An editorial Next.js site for La Condesa (lacondesa.mx), with stories, interviews, restaurant reviews, and lists managed in Sanity CMS.
+
+
+## Editorial focus
+
+The primary navigation is Journal (`/blog`), People (`/stories`), Lists (`/lists`), and About. There are no visitor accounts or authentication flows. Newsletter subscription is optional and only collects an email address.
+
+In `/studio`, use **Journal — stories & reviews** for articles, tips, place stories, and restaurant reviews; **People — interviews** for portrait interviews; and **Lists & guides** for listicles. Authors and site settings remain available. Directory, community voting, openings, and newsletter archives are retained under **Additional content**, outside the main visitor navigation.
+
+`/listas`, `/listas/[slug]`, `/equipo`, and `/contacto` redirect permanently to their canonical English routes. The static `/historias` portraits contain different content from the CMS interviews and remain accessible through existing URLs.
+
+Reading pages have no exit popup, sticky subscription bar, or subscription form inserted into the article body. The Sanity webhook at `/api/revalidate?secret=...` refreshes the home, editorial collections, matching detail pages, and sitemap; it requires `REVALIDATE_SECRET`.
 
 ---
 

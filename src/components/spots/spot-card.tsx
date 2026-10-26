@@ -1,57 +1,10 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
-import { Bookmark, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import type { Restaurant } from "@/types/restaurant";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
 import { getSpotAvailabilityLine, isOpenNow } from "@/lib/restaurant-hours";
 import { truncateSpotDescription } from "@/lib/spots-directory-logic";
-
-const SAVED_KEY = "lacondesa-saved-spots";
-
-function useSavedSpot(id: string) {
-  const [saved, setSaved] = useState(false);
-
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem(SAVED_KEY);
-      const list: string[] = raw ? JSON.parse(raw) : [];
-      setSaved(Array.isArray(list) && list.includes(id));
-    } catch {
-      setSaved(false);
-    }
-  }, [id]);
-
-  const toggle = useCallback(
-    (e: React.MouseEvent) => {
-      e.preventDefault();
-      e.stopPropagation();
-      setSaved((prev) => {
-        const next = !prev;
-        try {
-          const raw = localStorage.getItem(SAVED_KEY);
-          let list: string[] = raw ? JSON.parse(raw) : [];
-          if (!Array.isArray(list)) list = [];
-          if (next) {
-            if (!list.includes(id)) list.push(id);
-          } else {
-            list = list.filter((x) => x !== id);
-          }
-          localStorage.setItem(SAVED_KEY, JSON.stringify(list));
-        } catch {
-          /* ignore */
-        }
-        return next;
-      });
-    },
-    [id]
-  );
-
-  return { saved, toggle };
-}
 
 type Props = {
   restaurant: Restaurant;
@@ -66,7 +19,6 @@ export function SpotCard({ restaurant }: Props) {
   const desc = truncateSpotDescription(restaurant.description);
   const hasReviews =
     restaurant.rating && restaurant.rating.count > 0;
-  const { saved, toggle } = useSavedSpot(restaurant.id);
   const imgAlt = `${restaurant.name} — ${restaurant.neighborhood.name}`;
 
   return (
@@ -101,20 +53,6 @@ export function SpotCard({ restaurant }: Props) {
         >
           {open ? "Open" : "Closed"}
         </Badge>
-        <button
-          type="button"
-          onClick={toggle}
-          className={cn(
-            "absolute right-2 top-2 inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card/95 text-muted-foreground shadow-sm transition-colors hover:bg-muted hover:text-foreground",
-            saved && "text-primary"
-          )}
-          aria-label={saved ? "Remove from saved" : "Save spot"}
-        >
-          <Bookmark
-            className={cn("h-4 w-4", saved && "fill-current")}
-            aria-hidden
-          />
-        </button>
       </div>
 
       <div className="flex flex-1 flex-col p-4">

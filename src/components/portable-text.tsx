@@ -1,12 +1,9 @@
-"use client";
-
 import {
   PortableText,
   type PortableTextComponents,
 } from "@portabletext/react";
 import Image from "next/image";
 import { urlFor } from "@/sanity/image";
-import { EmailSignup } from "@/components/email-signup";
 
 export const portableTextComponents: PortableTextComponents = {
   block: {
@@ -70,73 +67,11 @@ export const portableTextComponents: PortableTextComponents = {
   },
 };
 
-interface ArticleBodyProps {
-  body: unknown[];
-  insertCtaAfterBlock?: number;
-}
-
-export function ArticleBody({
-  body,
-  insertCtaAfterBlock = 3,
-}: ArticleBodyProps) {
-  const blocks = body as Array<{ _key?: string; _type: string }>;
-  const normalBlocks = blocks.filter(
-    (b) => b._type === "block" || b._type === "image"
+export function ArticleBody({ body }: { body: unknown[] }) {
+  return (
+    <PortableText
+      value={body as Parameters<typeof PortableText>[0]["value"]}
+      components={portableTextComponents}
+    />
   );
-
-  let paragraphCount = 0;
-  let ctaInserted = false;
-  const enrichedBlocks: Array<unknown> = [];
-
-  for (const block of normalBlocks) {
-    enrichedBlocks.push(block);
-
-    if (block._type === "block" && !ctaInserted) {
-      paragraphCount++;
-      if (paragraphCount === insertCtaAfterBlock) {
-        ctaInserted = true;
-        enrichedBlocks.push({ _type: "__cta__", _key: "inline-cta" });
-      }
-    }
-  }
-
-  const renderedParts: React.ReactNode[] = [];
-  let currentBlocks: unknown[] = [];
-  let partIndex = 0;
-
-  for (const block of enrichedBlocks) {
-    const b = block as { _type: string };
-    if (b._type === "__cta__") {
-      if (currentBlocks.length > 0) {
-        renderedParts.push(
-          <PortableText
-            key={`pt-${partIndex}`}
-            value={currentBlocks as Parameters<typeof PortableText>[0]["value"]}
-            components={portableTextComponents}
-          />
-        );
-        currentBlocks = [];
-        partIndex++;
-      }
-      renderedParts.push(
-        <div key="inline-cta" className="my-10">
-          <EmailSignup variant="inline" />
-        </div>
-      );
-    } else {
-      currentBlocks.push(block);
-    }
-  }
-
-  if (currentBlocks.length > 0) {
-    renderedParts.push(
-      <PortableText
-        key={`pt-${partIndex}`}
-        value={currentBlocks as Parameters<typeof PortableText>[0]["value"]}
-        components={portableTextComponents}
-      />
-    );
-  }
-
-  return <>{renderedParts}</>;
 }

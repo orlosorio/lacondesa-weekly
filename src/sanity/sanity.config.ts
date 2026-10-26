@@ -20,30 +20,20 @@ export default defineConfig({
         S.list()
           .title("Content")
           .items([
-            S.documentTypeListItem("article").title("Articles"),
-            S.documentTypeListItem("historia").title("Stories (La Condesa)"),
-            S.documentTypeListItem("restaurant").title("Restaurant profiles"),
-            S.documentTypeListItem("newOpening").title("New Openings"),
-            S.documentTypeListItem("archiveIssue").title("Archive Issues"),
-            S.documentTypeListItem("testimonial").title("Testimonials"),
-            S.documentTypeListItem("teamMember").title("Team"),
-            S.documentTypeListItem("listicle").title("Listicles"),
+            S.documentTypeListItem("article").title("Journal — stories & reviews"),
+            S.documentTypeListItem("listicle").title("Lists & guides"),
+            S.documentTypeListItem("historia").title("People — interviews"),
+            S.documentTypeListItem("teamMember").title("Authors & team"),
             S.listItem()
-              .title("Wall of Love — Pending")
-              .child(
-                S.documentList()
-                  .title("Pending restaurant submissions")
-                  .filter(
-                    '_type == "wallOfLoveRestaurant" && approved == false'
-                  )
-                  .defaultOrdering([
-                    { field: "submittedAt", direction: "desc" },
-                  ])
-              ),
-            S.documentTypeListItem("wallOfLoveRestaurant").title(
-              "Wall of Love — Restaurants"
-            ),
-            S.documentTypeListItem("wallOfLoveVote").title("Wall of Love — Votes"),
+              .title("Additional content")
+              .child(S.list().title("Additional content").items([
+                S.documentTypeListItem("restaurant").title("Place directory"),
+                S.documentTypeListItem("newOpening").title("New openings"),
+                S.documentTypeListItem("archiveIssue").title("Newsletter archive"),
+                S.documentTypeListItem("testimonial").title("Testimonials"),
+                S.documentTypeListItem("wallOfLoveRestaurant").title("Community places"),
+                S.documentTypeListItem("wallOfLoveVote").title("Community votes"),
+              ])),
             S.divider(),
             S.listItem()
               .title("Site Settings")

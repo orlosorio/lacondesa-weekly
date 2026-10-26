@@ -18,7 +18,6 @@ function validateContactBody(body: Record<string, unknown>): { ok: boolean; erro
   const email = typeof body.email === "string" ? body.email.trim() : "";
   const subject = body.subject;
   const message = typeof body.message === "string" ? body.message.trim() : "";
-  const newsletter = body.newsletter === true || body.newsletter === "true";
 
   if (!name || name.length < 2) {
     return { ok: false, error: "Name is required." };

@@ -135,7 +135,6 @@ export default async function ListiclePage({ params }: PageProps) {
         {listicle.author && listicle.author.slug && (
           <script
             type="application/ld+json"
-            // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{
               __html: JSON.stringify({
                 "@context": "https://schema.org",

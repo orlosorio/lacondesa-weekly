@@ -2,8 +2,6 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
-import { EmailSignup } from "@/components/email-signup";
-import { StickySignupBar } from "@/components/sticky-signup-bar";
 import { ArticleBody } from "@/components/portable-text";
 import {
   getArticleBySlug,
@@ -46,8 +44,6 @@ export async function generateMetadata({
 
 function renderStaticBody(body: string[]) {
   const elements: React.ReactNode[] = [];
-  let insertedCta = false;
-  let paragraphCount = 0;
 
   for (let i = 0; i < body.length; i++) {
     const text = body[i];
@@ -64,20 +60,12 @@ function renderStaticBody(body: string[]) {
         </blockquote>
       );
     } else {
-      paragraphCount++;
       elements.push(
         <p key={`p-${i}`} className="text-muted-foreground leading-relaxed mb-6 text-lg">
           {text}
         </p>
       );
-      if (paragraphCount === 3 && !insertedCta) {
-        insertedCta = true;
-        elements.push(
-          <div key="inline-cta" className="my-10">
-            <EmailSignup variant="inline" />
-          </div>
-        );
-      }
+
     }
   }
   return elements;
@@ -104,20 +92,6 @@ export default async function BlogArticlePage({ params }: PageProps) {
     : article?.image
       ? (article.image as string)
       : getBlogPostImageUrl(source.slug, 1200);
-  // #region agent log
-  fetch("http://127.0.0.1:7483/ingest/e5dcf654-c539-40d8-a49f-f3353a40d0e2", {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "cf215d" },
-    body: JSON.stringify({
-      sessionId: "cf215d",
-      location: "blog/[slug]/page.tsx",
-      message: "Blog post hero image source",
-      data: { slug, usingSanity, hasSanityImage, imagePrefix: (imageSrc || "").slice(0, 60), fromSanityCdn: (imageSrc || "").includes("cdn.sanity.io") },
-      timestamp: Date.now(),
-      hypothesisId: "H4",
-    }),
-  }).catch(() => {});
-  // #endregion
 
   /** Related stories exclude "New Openings" (separate carousel) for now. */
   const EXCLUDE_RELATED_CATEGORY = "New Openings";
@@ -182,7 +156,6 @@ export default async function BlogArticlePage({ params }: PageProps) {
           {articleJsonLd && (
             <script
               type="application/ld+json"
-              // eslint-disable-next-line react/no-danger
               dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
             />
           )}
@@ -286,7 +259,6 @@ export default async function BlogArticlePage({ params }: PageProps) {
         </section>
       </main>
 
-      <StickySignupBar />
     </>
   );
 }

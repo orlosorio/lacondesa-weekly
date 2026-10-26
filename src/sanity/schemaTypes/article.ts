@@ -2,7 +2,7 @@ import { defineField, defineType } from "sanity";
 
 export const article = defineType({
   name: "article",
-  title: "Article",
+  title: "Story / article",
   type: "document",
   // Allow creating and editing articles directly in the Published perspective (avoids "Choose a destination" banner)
   liveEdit: true,
@@ -34,6 +34,10 @@ export const article = defineType({
       type: "string",
       options: {
         list: [
+          { title: "People", value: "People" },
+          { title: "Places", value: "Places" },
+          { title: "Tips", value: "Tips" },
+          { title: "Restaurant Reviews", value: "Restaurant Reviews" },
           { title: "New Openings", value: "New Openings" },
           { title: "Weekend Picks", value: "Weekend Picks" },
           { title: "Hidden Gems", value: "Hidden Gems" },

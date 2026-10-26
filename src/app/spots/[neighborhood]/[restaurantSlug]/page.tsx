@@ -17,7 +17,6 @@ import { MenuSection } from "@/components/restaurant/menu-section";
 import { PhotoGallery } from "@/components/restaurant/photo-gallery";
 import { MapEmbed } from "@/components/restaurant/map-embed";
 import { ReviewList } from "@/components/restaurant/review-list";
-import { OwnerClaimBanner } from "@/components/restaurant/owner-claim-banner";
 
 export const revalidate = 120;
 /** Allow new Sanity slugs without redeploying when combined with ISR. */
@@ -108,7 +107,6 @@ export default async function RestaurantProfilePage({ params }: PageProps) {
     <div className="min-h-screen bg-background pt-16 lg:pt-20">
       <script
         type="application/ld+json"
-        // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
@@ -154,7 +152,6 @@ export default async function RestaurantProfilePage({ params }: PageProps) {
 
         <ReviewList reviews={restaurant.reviews} />
 
-        <OwnerClaimBanner restaurantName={restaurant.name} />
       </div>
     </div>
   );

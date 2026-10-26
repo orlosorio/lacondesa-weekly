@@ -1,8 +1,14 @@
+import type { Metadata } from "next";
 import { getArticles } from "@/sanity/fetch";
 import { urlFor } from "@/sanity/image";
 import { getBlogPostImageUrl } from "@/lib/blog-images";
-import { categories } from "@/lib/data";
 import { BlogPageContent } from "@/components/blog-page-content";
+
+export const metadata: Metadata = {
+  title: "Journal",
+  description: "People, places, practical tips, and restaurant reviews from La Condesa, Mexico City.",
+  alternates: { canonical: "https://lacondesa.mx/blog" },
+};
 
 function formatDate(dateStr: string): string {
   if (!dateStr) return "";
@@ -44,25 +50,6 @@ export default async function BlogPage() {
     }
   );
 
-  // #region agent log
-  const firstDisplay = displayArticles[0];
-  if (firstDisplay) {
-    const firstSource = (usingSanity ? sanityArticles ?? [] : articles)[0];
-    const rawImg = firstSource && (firstSource as { image?: unknown }).image;
-    fetch("http://127.0.0.1:7483/ingest/e5dcf654-c539-40d8-a49f-f3353a40d0e2", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "cf215d" },
-      body: JSON.stringify({
-        sessionId: "cf215d",
-        location: "blog/page.tsx",
-        message: "Blog index first article image source",
-        data: { usingSanity, hasSanityImage: usingSanity && rawImg != null && typeof rawImg === "object", imagePrefix: (firstDisplay.image || "").slice(0, 60), fromSanityCdn: (firstDisplay.image || "").includes("cdn.sanity.io") },
-        timestamp: Date.now(),
-        hypothesisId: "H2",
-      }),
-    }).catch(() => {});
-  }
-  // #endregion
 
-  return <BlogPageContent articles={displayArticles} categories={categories} />;
+  return <BlogPageContent articles={displayArticles} />;
 }

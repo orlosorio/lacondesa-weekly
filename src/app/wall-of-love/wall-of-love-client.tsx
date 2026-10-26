@@ -153,11 +153,6 @@ export function WallOfLoveClient() {
 
   const handleVote = useCallback(
     async (restaurantId: string, voteType: "upvote" | "downvote") => {
-      /*
-       * PHASE 2: Replace localStorage + fingerprint vote tracking with authenticated user votes.
-       * Before calling the vote API, check if user is logged in.
-       * If not logged in, show a modal: "Sign in to vote — it only takes a second."
-       */
 
       const existingLocalVote = getUserVote(restaurantId);
       if (existingLocalVote) {

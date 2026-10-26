@@ -133,22 +133,6 @@ export async function getArticles(): Promise<{
     if (!sanityArticles || sanityArticles.length === 0) {
       return { articles: fallbackArticles, sanityArticles: null, usingSanity: false };
     }
-    // #region agent log
-    const first = sanityArticles[0];
-    const img = (first as { image?: unknown }).image;
-    fetch("http://127.0.0.1:7483/ingest/e5dcf654-c539-40d8-a49f-f3353a40d0e2", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "cf215d" },
-      body: JSON.stringify({
-        sessionId: "cf215d",
-        location: "fetch.ts:getArticles",
-        message: "Sanity articles image check",
-        data: { count: sanityArticles.length, firstSlug: first?.slug, hasImage: img != null, imageType: img == null ? "null" : typeof img, imageKeys: img && typeof img === "object" && !Array.isArray(img) ? Object.keys(img as object).slice(0, 8) : undefined },
-        timestamp: Date.now(),
-        hypothesisId: "H1",
-      }),
-    }).catch(() => {});
-    // #endregion
     return { articles: [], sanityArticles, usingSanity: true };
   } catch {
     return { articles: fallbackArticles, sanityArticles: null, usingSanity: false };

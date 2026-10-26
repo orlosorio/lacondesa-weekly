@@ -1,12 +1,7 @@
 import { revalidatePath } from "next/cache";
 import { type NextRequest, NextResponse } from "next/server";
 
-/**
- * On-demand revalidation for Stories (Sanity webhook).
- * Set REVALIDATE_SECRET in .env.local and call:
- * POST /api/revalidate?secret=YOUR_SECRET
- * Body may include Sanity webhook payload with `result.slug.current` or `slug.current`.
- */
+/** Sanity webhook: refresh editorial collections and their story pages. */
 export async function POST(request: NextRequest) {
   const secret = request.nextUrl.searchParams.get("secret");
   if (!process.env.REVALIDATE_SECRET || secret !== process.env.REVALIDATE_SECRET) {
@@ -17,17 +12,20 @@ export async function POST(request: NextRequest) {
   try {
     const body = (await request.json()) as {
       slug?: { current?: string };
-      result?: { slug?: { current?: string }; _type?: string };
+      result?: { slug?: { current?: string } };
     };
-    slug = body?.result?.slug?.current ?? body?.slug?.current;
+    const candidate = body?.result?.slug?.current ?? body?.slug?.current;
+    if (typeof candidate === "string" && /^[a-zA-Z0-9_-]+$/.test(candidate)) slug = candidate;
   } catch {
-    /* empty body ok */
+    // An empty webhook still refreshes the collections.
   }
 
-  if (slug) {
-    revalidatePath(`/stories/${slug}`);
+  revalidatePath("/");
+  for (const collection of ["blog", "stories", "lists"]) {
+    revalidatePath(`/${collection}`);
+    if (slug) revalidatePath(`/${collection}/${slug}`);
   }
-  revalidatePath("/stories");
+  revalidatePath("/sitemap.xml");
 
   return NextResponse.json({ revalidated: true, slug: slug ?? null });
 }

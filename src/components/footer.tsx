@@ -1,187 +1,25 @@
 import Link from "next/link";
-import Image from "next/image";
-import { ArrowRight, Instagram, Mail } from "lucide-react";
-import { SPOT_NEIGHBORHOODS } from "@/lib/spots-config";
 
-function TikTokIcon() {
-  return (
-    <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
-    </svg>
-  );
-}
-
-const quickLinks = [
-  { href: "/about", label: "About" },
-  { href: "/blog", label: "Blog" },
+const links = [
+  { href: "/blog", label: "Journal" },
+  { href: "/stories", label: "People" },
   { href: "/lists", label: "Lists" },
-  { href: "/team", label: "Team" },
-  { href: "/advertise", label: "Advertise" },
-  { href: "/archive", label: "Archive" },
+  { href: "/about", label: "About" },
+  { href: "/team", label: "Our team" },
   { href: "/contact", label: "Contact" },
+  { href: "/subscribe", label: "Newsletter" },
   { href: "/privacy", label: "Privacy" },
-];
-
-const businessLinks = [
-  { href: "/submit", label: "Submit opening" },
+  { href: "/terms", label: "Terms" },
 ];
 
 export function Footer() {
   return (
-    <footer className="bg-secondary border-t border-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-        <section
-          aria-labelledby="footer-newsletter-title"
-          className="mb-10 flex flex-col gap-6 rounded-2xl border border-primary/15 bg-background p-6 sm:p-8 lg:flex-row lg:items-center lg:justify-between"
-        >
-          <div className="flex items-start gap-4">
-            <span className="hidden h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary sm:flex">
-              <Mail className="h-5 w-5" aria-hidden="true" />
-            </span>
-            <div>
-              <h2
-                id="footer-newsletter-title"
-                className="font-serif text-2xl font-semibold text-foreground sm:text-3xl"
-              >
-                A little more neighborhood in your inbox.
-              </h2>
-              <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">
-                New openings, hidden gems, and weekend plans. Get the best of La
-                Condesa in one free weekly email.
-              </p>
-            </div>
-          </div>
-          <Link
-            href="/subscribe"
-            className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
-          >
-            Subscribe for free
-            <ArrowRight className="h-4 w-4" aria-hidden="true" />
-          </Link>
-        </section>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12">
-          <div className="md:col-span-1">
-            <Link href="/" className="inline-block">
-              <span className="font-serif text-xl font-semibold text-foreground">
-                La Condesa Weekly
-              </span>
-            </Link>
-            <p className="mt-4 text-sm text-muted-foreground leading-relaxed">
-              Your weekly guide to the best of La Condesa. New openings, weekend
-              picks, hidden gems, and everything worth doing in the
-              neighborhood.
-            </p>
-          </div>
-
-          <div className="md:col-span-1">
-            <h3 className="text-sm font-semibold text-foreground mb-4">
-              Explore
-            </h3>
-            <ul className="space-y-3">
-              <li>
-                <Link
-                  href="/spots"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  All Spots
-                </Link>
-              </li>
-              {SPOT_NEIGHBORHOODS.map((n) => (
-                <li key={n.slug}>
-                  <Link
-                    href={`/spots/${n.slug}`}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {n.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="md:col-span-1">
-            <h3 className="text-sm font-semibold text-foreground mb-4">
-              Quick Links
-            </h3>
-            <ul className="space-y-3">
-              {quickLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="md:col-span-1">
-            <h3 className="text-sm font-semibold text-foreground mb-4">
-              For businesses
-            </h3>
-            <ul className="space-y-3">
-              {businessLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="md:col-span-1">
-            <h3 className="text-sm font-semibold text-foreground mb-4">
-              Follow Us
-            </h3>
-            <div className="flex gap-4">
-              <a
-                href="https://instagram.com/lacondesaweekly"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <Instagram className="h-5 w-5" />
-                <span className="sr-only">Instagram</span>
-              </a>
-              <a
-                href="https://tiktok.com/@lacondesaweekly"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <TikTokIcon />
-                <span className="sr-only">TikTok</span>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-12 pt-8 border-t border-border">
-          <div className="footer-illustration relative w-full max-w-4xl mx-auto aspect-[2/1] rounded-lg overflow-hidden mb-8">
-            <Image
-              src="/images/footer-condesa.png"
-              alt="Street scene in La Condesa, Mexico City — cafes, jacarandas, and Parque España"
-              fill
-              className="object-cover"
-              sizes="(max-width: 1024px) 100vw, 896px"
-            />
-          </div>
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-muted-foreground">
-              Made with love in La Condesa
-            </p>
-            <p className="text-sm text-muted-foreground">
-              {new Date().getFullYear()} La Condesa Weekly. All rights reserved.
-            </p>
-          </div>
-        </div>
-      </div>
+    <footer className="he-footer he-site-footer">
+      <p>Made in La Condesa.</p>
+      <nav aria-label="Footer navigation">
+        {links.map((link) => <Link key={link.href} href={link.href}>{link.label}</Link>)}
+        <a href="https://instagram.com/lacondesaweekly" target="_blank" rel="noopener noreferrer">Instagram</a>
+      </nav>
     </footer>
   );
 }

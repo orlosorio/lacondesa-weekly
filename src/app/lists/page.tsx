@@ -48,7 +48,7 @@ export default async function ListsPage() {
 
   return (
     <main className="pt-20 lg:pt-24 min-h-screen bg-background">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
         <header className="mb-12 lg:mb-16">
           <h1 className="font-serif text-3xl lg:text-4xl font-semibold text-foreground tracking-tight mb-4">
             Lists
@@ -64,7 +64,7 @@ export default async function ListsPage() {
             Lists and guides coming soon.
           </p>
         ) : (
-          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 list-none p-0 m-0">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-14 list-none p-0 m-0">
             {listicles.map((l) => {
               const heroUrl =
                 l.heroImage && typeof l.heroImage === "object"
@@ -86,7 +86,7 @@ export default async function ListsPage() {
                           width={600}
                           height={400}
                           className="h-full w-full object-cover object-center group-hover:scale-[1.03] transition-transform duration-500"
-                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          sizes="(max-width: 640px) 100vw, 50vw"
                         />
                       ) : (
                         <div className="absolute inset-0 flex items-center justify-center text-muted-foreground/50 font-serif text-4xl">
