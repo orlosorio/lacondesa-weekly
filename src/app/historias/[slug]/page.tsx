@@ -59,7 +59,7 @@ export default async function HistoriaProfilePage({ params }: PageProps) {
             {/* Portrait */}
             <div className="lg:col-span-5 flex justify-center lg:justify-start">
               <div className="relative w-full max-w-[420px] lg:max-w-none">
-                <div className="relative aspect-[3/4] rounded-[2px] overflow-hidden bg-[#e8e2d9] border border-[#1a1612]/12 shadow-[0_28px_64px_-24px_rgba(26,22,18,0.35)] ring-1 ring-[#1a1612]/5">
+                <div className="relative aspect-[3/4] rounded-[2px] overflow-hidden bg-[#e8e2d9] border border-[#25231f]/12 shadow-[0_28px_64px_-24px_rgba(26,22,18,0.35)] ring-1 ring-[#25231f]/5">
                   <Image
                     src={heroSrc}
                     alt={`Retrato de ${profile.name}`}
@@ -70,7 +70,7 @@ export default async function HistoriaProfilePage({ params }: PageProps) {
                   />
                   <div className="historias-grain pointer-events-none z-[1]" aria-hidden />
                 </div>
-                <p className="mt-3 text-center lg:text-left font-sans text-[11px] uppercase tracking-[0.16em] text-[#6b6358]">
+                <p className="mt-3 text-center lg:text-left font-sans text-[11px] uppercase tracking-[0.16em] text-[#676057]">
                   Fotografía — Historias de La Condesa
                 </p>
               </div>
@@ -78,45 +78,45 @@ export default async function HistoriaProfilePage({ params }: PageProps) {
 
             {/* Name, details, bio */}
             <div className="lg:col-span-7 flex flex-col justify-center min-w-0">
-              <span className="inline-flex w-fit rounded-full border border-[#c4552a]/35 bg-[#c4552a]/[0.06] px-3 py-1.5 text-[11px] uppercase tracking-[0.2em] text-[#c4552a] font-sans font-semibold">
+              <span className="inline-flex w-fit rounded-full border border-[#a33a2b]/35 bg-[#a33a2b]/[0.06] px-3 py-1.5 text-[11px] uppercase tracking-[0.2em] text-[#a33a2b] font-sans font-semibold">
                 {profile.categoryLabel}
               </span>
-              <h1 className="font-serif text-[clamp(2.25rem,5vw,3.75rem)] font-semibold text-[#1a1612] leading-[1.08] mt-5 tracking-tight">
+              <h1 className="font-serif text-[clamp(2.25rem,5vw,3.75rem)] font-semibold text-[#25231f] leading-[1.08] mt-5 tracking-tight">
                 {profile.name}
               </h1>
-              <p className="font-historias-body mt-4 text-xl sm:text-2xl italic text-[#4a433c] leading-snug max-w-2xl">
+              <p className="font-historias-body mt-4 text-xl sm:text-2xl italic text-[#676057] leading-snug max-w-2xl">
                 {profile.tagline}
               </p>
-              <div className="mt-8 h-px w-full max-w-md bg-gradient-to-r from-[#c4552a]/70 via-[#c4552a]/25 to-transparent" aria-hidden />
+              <div className="mt-8 h-px w-full max-w-md bg-gradient-to-r from-[#a33a2b]/70 via-[#a33a2b]/25 to-transparent" aria-hidden />
 
-              <dl className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-4 font-sans border-t border-b border-[#1a1612]/10 py-6">
+              <dl className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-4 font-sans border-t border-b border-[#25231f]/10 py-6">
                 <div>
-                  <dt className="text-[10px] uppercase tracking-[0.18em] text-[#6b6358] mb-1.5">
+                  <dt className="text-[10px] uppercase tracking-[0.18em] text-[#676057] mb-1.5">
                     Barrio
                   </dt>
-                  <dd className="text-sm text-[#1a1612] font-medium leading-snug">
+                  <dd className="text-sm text-[#25231f] font-medium leading-snug">
                     {profile.neighborhood}
                   </dd>
                 </div>
                 <div>
-                  <dt className="text-[10px] uppercase tracking-[0.18em] text-[#6b6358] mb-1.5">
+                  <dt className="text-[10px] uppercase tracking-[0.18em] text-[#676057] mb-1.5">
                     Oficio
                   </dt>
-                  <dd className="text-sm text-[#1a1612] font-medium leading-snug">
+                  <dd className="text-sm text-[#25231f] font-medium leading-snug">
                     {profile.profession}
                   </dd>
                 </div>
                 <div>
-                  <dt className="text-[10px] uppercase tracking-[0.18em] text-[#6b6358] mb-1.5">
+                  <dt className="text-[10px] uppercase tracking-[0.18em] text-[#676057] mb-1.5">
                     En La Condesa
                   </dt>
-                  <dd className="text-sm text-[#1a1612] font-medium leading-snug">
+                  <dd className="text-sm text-[#25231f] font-medium leading-snug">
                     {profile.yearsInCondesa}
                   </dd>
                 </div>
               </dl>
 
-              <p className="font-historias-body mt-10 text-[1.0625rem] sm:text-lg leading-[1.82] text-[#1a1612] max-w-2xl">
+              <p className="font-historias-body mt-10 text-[1.0625rem] sm:text-lg leading-[1.82] text-[#25231f] max-w-2xl">
                 {profile.summary}
               </p>
             </div>
@@ -127,17 +127,17 @@ export default async function HistoriaProfilePage({ params }: PageProps) {
       {/* Pull quote */}
       <section className="px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
         <HistoriasPullQuote className="max-w-4xl mx-auto text-center px-2">
-          <div className="h-px w-16 bg-[#c4552a]/50 mx-auto mb-10" aria-hidden />
-          <p className="relative font-serif text-[clamp(1.75rem,4.5vw,3rem)] leading-[1.25] text-[#1a1612] font-medium">
+          <div className="h-px w-16 bg-[#a33a2b]/50 mx-auto mb-10" aria-hidden />
+          <p className="relative font-serif text-[clamp(1.75rem,4.5vw,3rem)] leading-[1.25] text-[#25231f] font-medium">
             <span
-              className="absolute -left-2 sm:left-0 top-[-0.35em] font-serif text-[clamp(4rem,14vw,9rem)] leading-none text-[#c4552a]/15 select-none pointer-events-none"
+              className="absolute -left-2 sm:left-0 top-[-0.35em] font-serif text-[clamp(4rem,14vw,9rem)] leading-none text-[#a33a2b]/15 select-none pointer-events-none"
               aria-hidden
             >
               &ldquo;
             </span>
             <span className="relative z-[1]">{profile.pullQuote}</span>
           </p>
-          <div className="h-px w-16 bg-[#c4552a]/50 mx-auto mt-10" aria-hidden />
+          <div className="h-px w-16 bg-[#a33a2b]/50 mx-auto mt-10" aria-hidden />
         </HistoriasPullQuote>
       </section>
 
@@ -149,13 +149,13 @@ export default async function HistoriaProfilePage({ params }: PageProps) {
               key={i}
               className={cn(
                 "rounded-sm py-8 px-5 sm:px-8 -mx-2 sm:-mx-0",
-                i % 2 === 1 && "bg-[#1a1612]/[0.03]",
+                i % 2 === 1 && "bg-[#25231f]/[0.03]",
               )}
             >
-              <p className="font-sans text-xs sm:text-sm uppercase tracking-[0.18em] text-[#c4552a] font-semibold mb-4">
+              <p className="font-sans text-xs sm:text-sm uppercase tracking-[0.18em] text-[#a33a2b] font-semibold mb-4">
                 {block.q}
               </p>
-              <p className="font-historias-body text-[1.05rem] sm:text-[1.125rem] leading-[1.8] text-[#1a1612]">
+              <p className="font-historias-body text-[1.05rem] sm:text-[1.125rem] leading-[1.8] text-[#25231f]">
                 {block.a}
               </p>
             </div>
@@ -171,7 +171,7 @@ export default async function HistoriaProfilePage({ params }: PageProps) {
               {profile.secondaryPhotoIds.map((photoId) => (
                 <div
                   key={photoId}
-                  className="relative shrink-0 w-[78vw] max-w-[320px] md:w-auto md:max-w-none snap-center aspect-[4/5] rounded-[4px] overflow-hidden border border-[#1a1612]/12 bg-[#e8e2d9]"
+                  className="relative shrink-0 w-[78vw] max-w-[320px] md:w-auto md:max-w-none snap-center aspect-[4/5] rounded-[4px] overflow-hidden border border-[#25231f]/12 bg-[#e8e2d9]"
                 >
                   <Image
                     src={historiaPortraitUrl(photoId, 800, 1000)}

@@ -1,9 +1,10 @@
 /* Historias de La Condesa — editorial scope */
 .historias-editorial {
-  --historias-paper: #faf7f2;
-  --historias-ink: #1a1612;
-  --historias-accent: #c4552a;
-  --historias-muted: #6b6358;
+  --font-historias-body: var(--font-plex-sans);
+  --historias-paper: #fefcf8;
+  --historias-ink: #25231f;
+  --historias-accent: #a33a2b;
+  --historias-muted: #676057;
   --historias-rule: rgba(26, 22, 18, 0.12);
   --historias-next-bg: #2c1810;
   background-color: var(--historias-paper);

@@ -1,5 +1,5 @@
 /* Style 01: paper, type, open space and a focused reading column. */
-body:has(.home-editorial) {
+body:has(.he-header) {
   --background: #fefcf8;
   --foreground: #25231f;
   --card: #fefcf8;

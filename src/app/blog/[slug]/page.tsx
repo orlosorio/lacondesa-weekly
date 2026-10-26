@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
 import { ArticleBody } from "@/components/portable-text";
 import {
   getArticleBySlug,
@@ -11,7 +10,6 @@ import {
 import { urlFor } from "@/sanity/image";
 import { articles as fallbackArticles } from "@/lib/data";
 import { getBlogPostImageUrl } from "@/lib/blog-images";
-import { Calendar, Clock } from "lucide-react";
 import type { Metadata } from "next";
 
 interface PageProps {
@@ -152,7 +150,7 @@ export default async function BlogArticlePage({ params }: PageProps) {
   return (
     <>
       <main className="pt-20 lg:pt-24">
-        <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+        <article className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
           {articleJsonLd && (
             <script
               type="application/ld+json"
@@ -160,17 +158,17 @@ export default async function BlogArticlePage({ params }: PageProps) {
             />
           )}
           <header className="mb-8">
-            <div className="flex items-center gap-3 mb-4">
-              <Badge className="bg-primary/10 text-primary hover:bg-primary/20 border-transparent">
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 mb-5 font-mono text-xs text-muted-foreground">
+              <span>
                 {source.category}
-              </Badge>
+              </span>
               <span className="flex items-center gap-1 text-sm text-muted-foreground">
-                <Calendar className="h-4 w-4" />
+
                 {source.date}
               </span>
               {source.readTime && (
                 <span className="flex items-center gap-1 text-sm text-muted-foreground">
-                  <Clock className="h-4 w-4" />
+
                   {source.readTime}
                 </span>
               )}
@@ -194,7 +192,7 @@ export default async function BlogArticlePage({ params }: PageProps) {
             )}
           </header>
 
-          <div className="relative aspect-[16/9] mb-10 rounded-lg overflow-hidden mask-cloud-fade">
+          <div className="relative aspect-[16/9] mb-12 overflow-hidden">
             <Image
               src={imageSrc}
               alt={source.title}
@@ -218,33 +216,33 @@ export default async function BlogArticlePage({ params }: PageProps) {
 
         {/* Related articles */}
         <section className="border-t border-border bg-secondary">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
             <h2 className="font-serif text-2xl lg:text-3xl font-semibold text-foreground mb-8">
               More from La Condesa Weekly
             </h2>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            <div className="grid sm:grid-cols-2 gap-x-12 gap-y-14">
               {relatedItems.map((a) => (
                 <Link
                   key={a.slug}
                   href={`/blog/${a.slug}`}
-                  className="text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm overflow-hidden border-border bg-card hover:shadow-lg transition-shadow duration-300 group"
+                  className="group block"
                 >
-                  <div className="relative aspect-[16/10] overflow-hidden rounded-t-xl">
+                  <div className="relative aspect-[16/10] overflow-hidden">
                     <Image
                       src={a.imageSrc}
                       alt={a.title}
                       fill
                       className="object-cover object-center group-hover:scale-105 transition-transform duration-300"
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      sizes="(max-width: 640px) 100vw, 50vw"
                     />
                   </div>
-                  <div className="p-5">
+                  <div className="mt-5">
                     <div className="flex items-center gap-3 mb-3">
-                      <Badge className="bg-primary/10 text-primary hover:bg-primary/20 border-transparent text-xs">
+                      <span className="text-xs text-muted-foreground">
                         {a.category}
-                      </Badge>
+                      </span>
                       <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                        <Calendar className="h-3 w-3" />
+
                         {a.date}
                       </span>
                     </div>

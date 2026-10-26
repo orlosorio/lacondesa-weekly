@@ -46,7 +46,7 @@ export default async function TeamPage() {
   const piecesById = new Map(counts.map((c) => [c.id, c.pieces]));
 
   return (
-    <main className="min-h-screen bg-[#fafaf9] pt-20 lg:pt-28">
+    <main className="min-h-screen bg-[#fefcf8] pt-20 lg:pt-28">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
         <header className="max-w-2xl mb-16 lg:mb-24">
           <h1 className="font-serif text-3xl lg:text-4xl font-semibold text-foreground tracking-tight mb-6">

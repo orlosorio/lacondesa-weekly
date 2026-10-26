@@ -112,8 +112,6 @@ export default function AboutPage() {
             <EmailSignup
               variant="hero"
               ctaText="Subscribe - It's Free"
-              showSocialProof
-              socialProofText="Join 2,000+ Condesa insiders"
             />
           </div>
         </div>

@@ -27,22 +27,22 @@ export function HistoriasCollection({ profiles }: { profiles: HistoriaProfile[] 
     <>
       {/* Hero ~50vh */}
       <section className="relative min-h-[50vh] flex flex-col justify-center px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full py-16 lg:py-20">
-        <h1 className="font-serif text-[clamp(2.5rem,8vw,4.75rem)] font-semibold leading-[1.05] tracking-tight text-[#1a1612] max-w-4xl">
+        <h1 className="font-serif text-[clamp(2.5rem,8vw,4.75rem)] font-semibold leading-[1.05] tracking-tight text-[#25231f] max-w-4xl">
           Historias de
           <br />
           La Condesa
         </h1>
-        <p className="font-historias-body mt-6 max-w-xl text-lg sm:text-xl italic text-[#6b6358] leading-relaxed">
+        <p className="font-historias-body mt-6 max-w-xl text-lg sm:text-xl italic text-[#676057] leading-relaxed">
           The people who give this neighborhood its soul.
         </p>
         <div
-          className="mt-10 h-px w-24 bg-[#c4552a]/80"
+          className="mt-10 h-px w-24 bg-[#a33a2b]/80"
           aria-hidden
         />
       </section>
 
       {/* Filters */}
-      <section className="sticky top-16 lg:top-20 z-30 bg-[#faf7f2]/95 backdrop-blur-sm border-b border-[#1a1612]/8 py-4 px-4 sm:px-6 lg:px-8">
+      <section className="sticky top-16 lg:top-20 z-30 bg-[#fefcf8]/95 backdrop-blur-sm border-b border-[#25231f]/8 py-4 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex flex-wrap gap-2 sm:gap-3" role="tablist" aria-label="Filtrar por categoría">
           {FILTERS.map((f) => {
             const isActive = active === f.id;
@@ -54,10 +54,10 @@ export function HistoriasCollection({ profiles }: { profiles: HistoriaProfile[] 
                 aria-selected={isActive}
                 onClick={() => setActive(f.id)}
                 className={cn(
-                  "rounded-full px-4 py-2 text-xs sm:text-sm font-medium tracking-wide transition-colors duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c4552a]",
+                  "rounded-full px-4 py-2 text-xs sm:text-sm font-medium tracking-wide transition-colors duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#a33a2b]",
                   isActive
-                    ? "bg-[#c4552a] text-white"
-                    : "border border-[#1a1612]/25 bg-transparent text-[#1a1612] hover:border-[#c4552a] hover:text-[#c4552a]",
+                    ? "bg-[#a33a2b] text-white"
+                    : "border border-[#25231f]/25 bg-transparent text-[#25231f] hover:border-[#a33a2b] hover:text-[#a33a2b]",
                 )}
               >
                 {f.label}
@@ -87,15 +87,15 @@ export function HistoriasCollection({ profiles }: { profiles: HistoriaProfile[] 
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-[#1a1612]/10 px-4 sm:px-6 lg:px-8 py-12 max-w-7xl mx-auto w-full flex flex-col sm:flex-row items-center justify-between gap-6">
-        <p className="font-historias-body text-sm text-[#6b6358] text-center sm:text-left">
+      <footer className="border-t border-[#25231f]/10 px-4 sm:px-6 lg:px-8 py-12 max-w-7xl mx-auto w-full flex flex-col sm:flex-row items-center justify-between gap-6">
+        <p className="font-historias-body text-sm text-[#676057] text-center sm:text-left">
           Un proyecto de{" "}
-          <span className="text-[#1a1612] font-medium">La Condesa Weekly</span>
+          <span className="text-[#25231f] font-medium">La Condesa Weekly</span>
         </p>
         <button
           type="button"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="inline-flex items-center gap-2 text-sm font-medium text-[#c4552a] hover:text-[#a34422] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c4552a] rounded-md"
+          className="inline-flex items-center gap-2 text-sm font-medium text-[#a33a2b] hover:text-[#a34422] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#a33a2b] rounded-md"
           aria-label="Volver arriba"
         >
           <ArrowUp className="h-4 w-4" aria-hidden />
@@ -154,7 +154,7 @@ function HistoriaCard({
       <Link
         href={`/historias/${profile.slug}`}
         className={cn(
-          "group flex h-full flex-col rounded-sm overflow-hidden bg-[#f0ebe3] border border-[#1a1612]/8 shadow-sm transition-transform duration-500 ease-out hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#c4552a]",
+          "group flex h-full flex-col rounded-sm overflow-hidden bg-[#f0ebe3] border border-[#25231f]/8 shadow-sm transition-transform duration-500 ease-out hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#a33a2b]",
           isFeatured && "md:flex-row md:min-h-[400px]",
         )}
       >
@@ -175,7 +175,7 @@ function HistoriaCard({
             priority={listIndex < 3}
           />
           <div
-            className="absolute bottom-0 left-0 right-0 h-1 bg-[#c4552a] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"
+            className="absolute bottom-0 left-0 right-0 h-1 bg-[#a33a2b] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"
             aria-hidden
           />
         </div>
@@ -186,13 +186,13 @@ function HistoriaCard({
             isFeatured ? "md:w-[52%] md:flex-1" : "flex-1",
           )}
         >
-          <span className="text-[11px] sm:text-xs uppercase tracking-[0.2em] text-[#c4552a] font-sans font-semibold mb-3">
+          <span className="text-[11px] sm:text-xs uppercase tracking-[0.2em] text-[#a33a2b] font-sans font-semibold mb-3">
             {profile.categoryLabel}
           </span>
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-[2.75rem] font-semibold text-[#1a1612] leading-tight group-hover:underline decoration-[#c4552a]/50 decoration-1 underline-offset-4">
+          <h2 className="font-serif text-3xl sm:text-4xl lg:text-[2.75rem] font-semibold text-[#25231f] leading-tight group-hover:underline decoration-[#a33a2b]/50 decoration-1 underline-offset-4">
             {profile.name}
           </h2>
-          <p className="font-historias-body mt-4 text-lg italic text-[#6b6358] leading-snug">
+          <p className="font-historias-body mt-4 text-lg italic text-[#676057] leading-snug">
             {profile.tagline}
           </p>
         </div>

@@ -1,0 +1,48 @@
+/* Public pages share Style 01. Sanity Studio keeps its own interface. */
+body:has(.he-header) #home-content:not(:has(.home-editorial)) {
+  font-family: var(--font-plex-sans), sans-serif;
+  line-height: 1.8;
+}
+body:has(.he-header) #home-content:not(:has(.home-editorial)) :is(h1, h2, h3) {
+  font-family: var(--font-caslon), Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -.035em;
+  text-wrap: pretty;
+}
+body:has(.he-header) #home-content:not(:has(.home-editorial)) h1 { font-size: clamp(36px, 4.8vw, 60px); line-height: 1.16; }
+body:has(.he-header) #home-content:not(:has(.home-editorial)) h2 { line-height: 1.3; }
+body:has(.he-header) #home-content:not(:has(.home-editorial)) :is(.bg-card, .bg-secondary, .bg-white) { background-color: transparent; }
+body:has(.he-header) #home-content:not(:has(.home-editorial)) :is(.rounded-xl, .rounded-2xl, .rounded-lg, .rounded-md, .rounded-t-xl) { border-radius: 0; }
+body:has(.he-header) #home-content:not(:has(.home-editorial)) [class*="shadow-"] { box-shadow: none; }
+/* Decorative panels become open editorial blocks; fields retain their borders. */
+body:has(.he-header) #home-content:not(:has(.home-editorial)) :is(div, section, article, a, li)[class~="bg-card"] { border-color: transparent; --tw-ring-color: transparent; }
+body:has(.he-header) #home-content:not(:has(.home-editorial)) :is(section, footer)[class~="border-t"] { border-top-color: transparent; }
+body:has(.he-header) #home-content:not(:has(.home-editorial)) .mask-cloud-fade { mask-image: none; -webkit-mask-image: none; }
+body:has(.he-header) #home-content:not(:has(.home-editorial)) :is(input:not([type="checkbox"]):not([type="radio"]):not([type="file"]), textarea, select) {
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+}
+body:has(.he-header) :is(a, button, input, textarea, select, summary):focus-visible { outline: 2px solid #315a70; outline-offset: 4px; }
+body:has(.he-header) #home-content:not(:has(.home-editorial)) blockquote { border-color: var(--primary); }
+/* Consistent portrait collections, without ornamental lines or card panels. */
+body:has(.he-header) .stories-collection-hero { min-height: auto; max-width: 68rem; padding-top: 4rem; padding-bottom: 3rem; }
+body:has(.he-header) .stories-grid { max-width: 68rem; }
+body:has(.he-header) .stories-filters { position: static; border: 0; background: var(--background); backdrop-filter: none; }
+body:has(.he-header) .stories-filter-pill { border: 0; border-radius: 0; padding-inline: 12px; }
+body:has(.he-header) .stories-filter-pill.is-active { background: transparent; color: var(--primary); text-decoration: underline; text-underline-offset: 7px; }
+body:has(.he-header) .stories-card, body:has(.he-header) .stories-card:hover { background: transparent; border: 0; box-shadow: none; transform: none; border-radius: 0; }
+body:has(.he-header) .stories-card__body { padding-inline: 0; }
+body:has(.he-header) .stories-card__accent-bar, body:has(.he-header) .stories-collection-hero__rule, body:has(.he-header) .stories-pull__rule, body:has(.he-header) .historias-grain { display: none; }
+body:has(.he-header) .stories-qa-pair:nth-child(even) { background: transparent; }
+body:has(.he-header) .stories-footer { border: 0; }
+body:has(.he-header) .wall-of-love-hero, body:has(.he-header) .wall-cork-texture { background: var(--background); background-image: none; }
+@media (max-width: 680px) {
+  body:has(.he-header) #home-content:not(:has(.home-editorial)) h1 { font-size: 36px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body:has(.he-header) #home-content * { scroll-behavior: auto; animation: none; transition: none; }
+  .historia-card-observe, .historia-pull-quote-observe, .stories-card-wrap, .stories-pull__inner { opacity: 1; transform: none; }
+}

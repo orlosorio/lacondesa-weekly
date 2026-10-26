@@ -16,10 +16,13 @@
 }
 
 .stories-editorial {
-  --stories-paper: #faf7f2;
-  --stories-ink: #1a1612;
-  --stories-accent: #c4552a;
-  --stories-muted: #6b6358;
+  --font-stories-display: var(--font-caslon);
+  --font-stories-body: var(--font-plex-sans);
+  --font-stories-label: var(--font-plex-mono);
+  --stories-paper: #fefcf8;
+  --stories-ink: #25231f;
+  --stories-accent: #a33a2b;
+  --stories-muted: #676057;
   --stories-rule: rgba(26, 22, 18, 0.12);
   --stories-next-bg: #2c1810;
   min-height: 100vh;
@@ -98,7 +101,7 @@
   position: sticky;
   top: 4rem;
   z-index: 30;
-  background: rgba(250, 247, 242, 0.96);
+  background: #fefcf8;
   backdrop-filter: blur(8px);
   border-bottom: 1px solid rgba(26, 22, 18, 0.08);
   padding: 0.75rem 1rem;

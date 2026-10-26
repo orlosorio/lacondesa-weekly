@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { DM_Sans, Playfair_Display, Libre_Caslon_Text, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
+import { Libre_Caslon_Text, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { getSiteSettings } from "@/sanity/fetch";
 import { urlFor } from "@/sanity/image";
 import "./globals.css";
 import "./home-editorial.css";
+import "./public-editorial.css";
 import { Navigation } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import { CookieBanner } from "@/components/cookie-banner";
@@ -13,18 +14,6 @@ const DEFAULT_TITLE = "La Condesa Weekly | Your Guide to the Best of La Condesa"
 const DEFAULT_TEMPLATE = "%s | La Condesa Weekly";
 const DEFAULT_DESCRIPTION =
   "A free weekly newsletter covering the best of La Condesa, Mexico City. New openings, weekend picks, hidden gems, and everything worth doing in the neighborhood.";
-
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const playfairDisplay = Playfair_Display({
-  variable: "--font-playfair",
-  subsets: ["latin"],
-  display: "swap",
-});
 
 const caslon = Libre_Caslon_Text({ variable: "--font-caslon", subsets: ["latin"], weight: ["400", "700"], style: ["normal", "italic"], display: "swap" });
 const plexSans = IBM_Plex_Sans({ variable: "--font-plex-sans", subsets: ["latin"], weight: ["400", "500", "600"], display: "swap" });
@@ -92,7 +81,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${dmSans.variable} ${playfairDisplay.variable} ${caslon.variable} ${plexSans.variable} ${plexMono.variable} font-sans antialiased`}
+        className={`${caslon.variable} ${plexSans.variable} ${plexMono.variable} font-sans antialiased`}
       >
         <Navigation />
         <div id="home-content" tabIndex={-1}>{children}</div>
