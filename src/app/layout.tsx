@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DM_Sans, Playfair_Display } from "next/font/google";
+import { DM_Sans, Playfair_Display, Libre_Caslon_Text, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { getSiteSettings } from "@/sanity/fetch";
 import { urlFor } from "@/sanity/image";
@@ -25,6 +25,10 @@ const playfairDisplay = Playfair_Display({
   subsets: ["latin"],
   display: "swap",
 });
+
+const caslon = Libre_Caslon_Text({ variable: "--font-caslon", subsets: ["latin"], weight: ["400", "700"], style: ["normal", "italic"], display: "swap" });
+const plexSans = IBM_Plex_Sans({ variable: "--font-plex-sans", subsets: ["latin"], weight: ["400", "500", "600"], display: "swap" });
+const plexMono = IBM_Plex_Mono({ variable: "--font-plex-mono", subsets: ["latin"], weight: "400", display: "swap" });
 
 const FALLBACK_OG_IMAGE = "https://lacondesa.mx/images/hero-condesa.png";
 
@@ -88,10 +92,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${dmSans.variable} ${playfairDisplay.variable} font-sans antialiased`}
+        className={`${dmSans.variable} ${playfairDisplay.variable} ${caslon.variable} ${plexSans.variable} ${plexMono.variable} font-sans antialiased`}
       >
         <Navigation />
-        <main>{children}</main>
+        <main id="home-content">{children}</main>
         <Footer />
         <CookieBanner />
         <ExitIntentPopup />

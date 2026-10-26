@@ -1,28 +1,31 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
+import { usePathname } from "next/navigation";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { EmailSignup } from "@/components/email-signup";
 
 export function ExitIntentPopup() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const [shown, setShown] = useState(false);
+  const shown = useRef(false);
 
   const handleMouseLeave = useCallback(
     (e: MouseEvent) => {
-      if (shown) return;
+      if (shown.current || sessionStorage.getItem("exit-intent-shown")) return;
       if (e.clientY <= 5) {
+        shown.current = true;
+        sessionStorage.setItem("exit-intent-shown", "true");
         setOpen(true);
-        setShown(true);
       }
     },
-    [shown]
+    []
   );
 
   useEffect(() => {
+    if (pathname === "/") return;
     const alreadyShown = sessionStorage.getItem("exit-intent-shown");
     if (alreadyShown) {
-      setShown(true);
       return;
     }
 
@@ -34,14 +37,9 @@ export function ExitIntentPopup() {
       clearTimeout(timeout);
       document.removeEventListener("mouseleave", handleMouseLeave);
     };
-  }, [handleMouseLeave]);
+  }, [handleMouseLeave, pathname]);
 
-  useEffect(() => {
-    if (shown) {
-      sessionStorage.setItem("exit-intent-shown", "true");
-      document.removeEventListener("mouseleave", handleMouseLeave);
-    }
-  }, [shown, handleMouseLeave]);
+  if (pathname === "/") return null;
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

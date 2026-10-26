@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { HomeNavigation } from "@/components/home-navigation";
 import { useState, useEffect } from "react";
 import { ChevronDown, Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
@@ -28,15 +29,19 @@ const secondaryLinks = [
 
 export function Navigation() {
   const router = useRouter();
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [hoodOpen, setHoodOpen] = useState(false);
 
   useEffect(() => {
+    if (pathname === "/") return;
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [pathname]);
+
+  if (pathname === "/") return <HomeNavigation />;
 
   return (
     <header

@@ -163,7 +163,7 @@ export function Footer() {
         </div>
 
         <div className="mt-12 pt-8 border-t border-border">
-          <div className="relative w-full max-w-4xl mx-auto aspect-[2/1] rounded-lg overflow-hidden mb-8">
+          <div className="footer-illustration relative w-full max-w-4xl mx-auto aspect-[2/1] rounded-lg overflow-hidden mb-8">
             <Image
               src="/images/footer-condesa.png"
               alt="Street scene in La Condesa, Mexico City — cafes, jacarandas, and Parque España"

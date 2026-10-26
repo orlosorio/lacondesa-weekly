@@ -95,6 +95,9 @@ export function EmailSignup({
         >
           <input
             type="email"
+            aria-label="Email address"
+            autoComplete="email"
+            required
             placeholder="Enter your email"
             value={email}
             onChange={(e) => {
@@ -131,6 +134,9 @@ export function EmailSignup({
         >
           <input
             type="email"
+            aria-label="Email address"
+            autoComplete="email"
+            required
             placeholder="Enter your email"
             value={email}
             onChange={(e) => {
@@ -171,6 +177,9 @@ export function EmailSignup({
       >
         <input
           type="email"
+            aria-label="Email address"
+            autoComplete="email"
+            required
           placeholder="Enter your email"
           value={email}
           onChange={(e) => {
@@ -210,6 +219,9 @@ export function EmailSignup({
         >
           <input
             type="email"
+            aria-label="Email address"
+            autoComplete="email"
+            required
             placeholder="Enter your email"
             value={email}
             onChange={(e) => {
